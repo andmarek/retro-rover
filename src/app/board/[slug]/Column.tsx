@@ -2,7 +2,7 @@ import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import { Flex, TextArea, Button } from "@radix-ui/themes";
 import Comment from "./Comment";
-import { useUser } from "@clerk/clerk-react";
+import { useSession } from "@/lib/auth-client";
 import { useDroppable } from "@dnd-kit/core";
 
 interface Comment {

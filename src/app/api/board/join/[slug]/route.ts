@@ -1,9 +1,10 @@
-import { NextResponse } from "next/server";
-import { tableName, getBoard } from "@/src/app/lib/dynamo";
+import { NextRequest, NextResponse } from "next/server";
+import { tableName, getBoard } from "@/app/lib/dynamo";
 
-export async function POST(req: Request, { params }: { params: { slug: string } }) {
+export async function POST(request: NextRequest, context: { params: Promise<{ slug: string }> }) {
   try {
-    const reqJson = await req.json();
+    const params = await context.params;
+    const reqJson = await request.json();
     console.log("Join request received:", reqJson);
 
     const boardId: string = params.slug;

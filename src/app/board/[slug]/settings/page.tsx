@@ -1,18 +1,19 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { useUser } from "@clerk/clerk-react";
+import { useEffect, useState, use } from "react";
+import { useSession } from "@/lib/auth-client";
 import {
   Button,
   Link,
   TextFieldInput
 } from "@radix-ui/themes";
 
-export default function BoardSettings({ params }: { params: { slug: string } }) {
-  const boardId: string = params.slug;
+export default function BoardSettings({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = use(params);
+  const boardId: string = slug;
 
-  const { user } = useUser();
-  const userId = user?.id;
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
 
   const [boardName, setBoardName] = useState("");
 

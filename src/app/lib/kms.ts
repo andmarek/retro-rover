@@ -6,7 +6,7 @@ export async function decryptData(ciphertextBlob: string, keyId: string) {
 
   const command = new DecryptCommand({
     KeyId: keyId,
-    CiphertextBlob: Buffer.from(ciphertextBlob, 'base64'),
+    CiphertextBlob: new Uint8Array(Buffer.from(ciphertextBlob, 'base64')),
   });
   const kmsResponse = await client.send(command);
   const decryptedData = new TextDecoder().decode(kmsResponse.Plaintext);
@@ -18,7 +18,7 @@ export async function encryptData(plaintext: string, keyId: string) {
 
   const command = new EncryptCommand({
     KeyId: keyId,
-    Plaintext: Buffer.from(plaintext),
+    Plaintext: new Uint8Array(Buffer.from(plaintext)),
   });
   const encryptedBlob = await client.send(command);
   const buff = Buffer.from(encryptedBlob.CiphertextBlob);

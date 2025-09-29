@@ -7,14 +7,15 @@ import {
   DynamoDBDocumentClient,
 } from "@aws-sdk/lib-dynamodb"
 
-import { tableName, getBoard } from "@/src/app/lib/dynamo";
+import { tableName, getBoard } from "@/app/lib/dynamo";
 
 const ddb = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(ddb);
 
 /* Get the boards metadata by ID */
-export async function POST(request: NextRequest, { params: { slug } }) {
-  const boardId: string = slug;
+export async function POST(request: NextRequest, context: { params: Promise<{ slug: string }> }) {
+  const params = await context.params;
+  const boardId: string = params.slug;
 
   console.log("board id thing ", boardId);
   const response = await getBoard(tableName, boardId);
