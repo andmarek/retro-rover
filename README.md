@@ -1,5 +1,6 @@
-# EXPF
-A retro board or something like a dope todo list or trello or something.
+# RetroRover
+RetroRover is a free, open-source, and self-hosteable retrospective board application. The idea came about when I was running Agile(tm) retrospective for my team and particular retro sites that I was using became pay-to-play or had severely limited functionality. I realized I could create my own version that functioned better!
 
-
-Basically I am tired of pay-to-play retro boards.  This is my primary motivation for this project, aside from learning modern React frameworks and React itself.  
+# Technology
+- NextJS
+- Postgres

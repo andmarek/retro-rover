@@ -1,29 +1,31 @@
 import { NextRequest, NextResponse } from "next/server";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import {
-  PutCommand,
-  GetCommand,
-  DeleteCommand,
-  DynamoDBDocumentClient,
-} from "@aws-sdk/lib-dynamodb"
-
-import { tableName, getBoard } from "@/app/lib/dynamo";
-
-const ddb = new DynamoDBClient({});
-const docClient = DynamoDBDocumentClient.from(ddb);
+import { getBoard } from "@/app/lib/postgres";
 
 /* Get the boards metadata by ID */
 export async function POST(request: NextRequest, context: { params: Promise<{ slug: string }> }) {
-  const params = await context.params;
-  const boardId: string = params.slug;
+  try {
+    const params = await context.params;
+    const boardId: string = params.slug;
 
-  console.log("board id thing ", boardId);
-  const response = await getBoard(tableName, boardId);
-  console.log(response);
-  const boardMetadata = {
-    boardId: response.Item.BoardId,
-    boardName: response.Item.BoardName,
-  };
-  console.log(boardMetadata)
-  return Response.json(boardMetadata);
+    console.log("Getting board metadata for:", boardId);
+    const board = await getBoard(boardId);
+    
+    if (!board) {
+      return NextResponse.json({ error: "Board not found" }, { status: 404 });
+    }
+
+    const boardMetadata = {
+      boardId: board.board_id,
+      boardName: board.board_name,
+    };
+    
+    console.log("Board metadata:", boardMetadata);
+    return Response.json(boardMetadata);
+  } catch (error) {
+    console.error("Error getting board metadata:", error);
+    return NextResponse.json(
+      { error: "Failed to get board metadata" },
+      { status: 500 }
+    );
+  }
 }

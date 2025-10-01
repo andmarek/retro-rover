@@ -1,28 +1,19 @@
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, ScanCommand } from "@aws-sdk/lib-dynamodb";
-import { tableName } from "@/app/lib/dynamo";
-
-const ddb = new DynamoDBClient({});
-const docClient = DynamoDBDocumentClient.from(ddb);
+import { getAllBoards } from "@/app/lib/postgres";
 
 export async function GET() {
-  const command = new ScanCommand({
-    TableName: tableName as string,
-  });
+  try {
+    const boards = await getAllBoards();
+    
+    const boardsMetadata = boards.map((board) => ({
+      BoardId: board.board_id,
+      BoardName: board.board_name,
+      BoardDescription: board.board_description,
+      DateCreated: board.created_at,
+    }));
 
-  const response = await docClient.send(command);
-  const boards = response.Items;
-  console.log(boards)
-
-  const boardsMetadata = boards.map((board) => {
-    return {
-      BoardId: board.BoardId,
-      BoardName: board.BoardName,
-      BoardDescription: board.BoardDescription,
-      DateCreated: board.Date,
-    }
-  });
-
-  console.log(boardsMetadata);
-  return Response.json(boardsMetadata);
+    return Response.json(boardsMetadata);
+  } catch (error) {
+    console.error('Error fetching boards:', error);
+    return Response.json({ error: 'Failed to fetch boards' }, { status: 500 });
+  }
 }

@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { v4 as uuidv4 } from 'uuid';
 import { Cross1Icon, PlusIcon } from "@radix-ui/react-icons";
+import { useSession } from "@/lib/auth-client";
 import {
   Heading,
   Button,
@@ -45,11 +46,18 @@ export default function CreateBoard() {
   const [useTemplate, setUseTemplate] = useState(true);
 
   const router = useRouter();
+  const { data: session } = useSession();
 
   async function submitForm(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
     const boardId = uuidv4();
+    const userId = session?.user?.id;
+
+    if (!userId) {
+      console.error("User not authenticated");
+      return;
+    }
 
     console.log(boardId, boardName, boardDescription, boardColumns)
 
@@ -60,7 +68,8 @@ export default function CreateBoard() {
           boardId,
           boardName,
           boardDescription,
-          boardColumns
+          boardColumns,
+          userId
         }),
         headers: {
           "Content-Type": "application/json"

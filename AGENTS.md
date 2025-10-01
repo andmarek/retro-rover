@@ -24,7 +24,6 @@
 
 ### Backend & Database
 - **Next.js API Routes** (App Router format)
-- **AWS DynamoDB** as primary database
 - **AWS KMS** for encryption (currently disabled for passwords)
 - **Socket.io** for real-time features (currently disabled - see notes)
 
@@ -34,42 +33,8 @@
 - **uuid** for generating unique IDs
 - **svix** for webhook handling
 
-## Project Structure
-
-```
-src/app/
-├── api/                          # API Routes
-│   ├── board/                    # Board-related endpoints
-│   │   ├── [slug]/               # Individual board operations
-│   │   │   ├── metadata/         # Board metadata
-│   │   │   ├── password/         # Password management (disabled)
-│   │   │   └── route.ts          # Board CRUD
-│   │   ├── comments/             # Comment operations
-│   │   │   ├── [slug]/           # Like/unlike comments
-│   │   │   ├── edit/[slug]/      # Edit comments
-│   │   │   ├── move/[slug]/      # Move comments between columns
-│   │   │   └── route.ts          # Add/delete comments
-│   │   ├── join/[slug]/          # Join board endpoint
-│   │   └── route.ts              # Create boards
-│   ├── boards/                   # List boards
-│   └── webhooks/                 # Clerk auth webhooks
-├── board/[slug]/                 # Board UI Components
-│   ├── Board.tsx                 # Main board component
-│   ├── BoardEntryView.tsx        # Join board form
-│   ├── Column.tsx                # Board columns
-│   ├── Comment.tsx               # Individual comments
-│   ├── boardReducer.ts           # State management
-│   ├── socket.ts                 # WebSocket connection
-│   └── settings/                 # Board settings (WIP)
-├── create/                       # Create board page
-├── myBoards/                     # User's boards list
-└── lib/                          # Utility functions
-    ├── dynamo.ts                 # DynamoDB helpers
-    ├── kms.ts                    # Encryption utilities
-    └── utils.ts                  # General utilities
-```
-
 ## Current State & Important Notes
+- NEVER EVER run the development server. I have it running. To see the results of what is happening in the server, tail run.log.
 
 ### Recently Disabled Features
 1. **Password Protection**: All password-related functionality has been recently removed from the join flow. The system now grants access to any board that exists.
@@ -200,7 +165,6 @@ export PATH="/Users/andy/.config//nvm/versions/node/v22.19.0/bin:$PATH" && npm [
 
 ### When Debugging
 1. **Check browser console** - extensive logging throughout
-2. **DynamoDB table structure** - refer to established schema
 3. **API route logs** - server-side logging implemented
 4. **Component state** - reducer actions are logged
 

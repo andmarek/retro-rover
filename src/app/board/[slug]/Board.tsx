@@ -89,7 +89,7 @@ export default function Board(props: BoardProps) {
           }
 
           const jsonData = await response.json();
-          setBoardName(jsonData.Item.BoardName);
+          setBoardName(jsonData.Item.board_name);
 
           const boardColumns = transformBoardColumns(jsonData);
 
@@ -164,20 +164,16 @@ export default function Board(props: BoardProps) {
   }, []);
   */
   function transformBoardColumns(data: any) {
-    return Object.entries(data.Item.BoardColumns).map(
-      ([columnId, columnData]: [string, any]) => ({
-        columnId: columnId,
-        columnName: columnData.columnName,
-        currentText: columnData.currentText,
-        comments: Object.entries(columnData.comments || {}).map(
-          ([commentId, commentObj]: [string, any]) => ({
-            id: commentId,
-            comment_text: commentObj.comment_text,
-            comment_likes: commentObj.comment_likes,
-          })
-        ),
-      })
-    );
+    return data.Item.columns.map((column: any) => ({
+      columnId: column.column_id.toString(),
+      columnName: column.column_name,
+      currentText: "", // Set empty as it's not stored in new schema
+      comments: column.comments.map((comment: any) => ({
+        id: comment.comment_id,
+        comment_text: comment.comment_text,
+        comment_likes: comment.comment_likes,
+      })),
+    }));
   }
 
   function selectSortStatus(sortBy: string) {

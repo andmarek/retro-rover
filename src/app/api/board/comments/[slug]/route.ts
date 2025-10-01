@@ -1,11 +1,5 @@
 import { NextRequest } from "next/server";
-import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
-import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { tableName } from "@/app/lib/dynamo"
-
-
-const client = new DynamoDBClient({});
-const docClient = DynamoDBDocumentClient.from(client);
+import { incrementCommentLikes, decrementCommentLikes } from "@/app/lib/postgres";
 
 function getCommentIdFromPath(pathName: string) {
   const pathParts = pathName.split("/");
@@ -13,67 +7,44 @@ function getCommentIdFromPath(pathName: string) {
 }
 
 export async function POST(request: NextRequest) {
-  const data = await request.json();
+  try {
+    const data = await request.json();
 
-  const boardId = data.boardId;
-  const userId = data.userId;
-  const columnId = data.columnId;
+    const boardId = data.boardId;
+    const columnId = parseInt(data.columnId);
+    const commentId = getCommentIdFromPath(request.nextUrl.pathname);
 
-  const commentId = getCommentIdFromPath(request.nextUrl.pathname);
+    if (!commentId) {
+      return Response.json({ error: 'Comment ID not found' }, { status: 400 });
+    }
 
-  const updateExpression = "SET BoardColumns.#column_id.comments.#comment_id.comment_likes = BoardColumns.#column_id.comments.#comment_id.comment_likes + :val";
+    await incrementCommentLikes(boardId, columnId, commentId);
 
-  const expressionAttributeNames = {
-    "#column_id": columnId,
-    "#comment_id": commentId
+    return Response.json({ success: true });
+  } catch (error) {
+    console.error('Error incrementing comment likes:', error);
+    return Response.json({ error: 'Failed to increment likes' }, { status: 500 });
   }
-  const expressionAttributeValues = {
-    ":val": 1
-  }
-
-  const updateCommentCommand = new UpdateCommand({
-    TableName: tableName as string,
-    Key: {
-      BoardId: boardId,
-    },
-    UpdateExpression: updateExpression,
-    ExpressionAttributeNames: expressionAttributeNames,
-    ExpressionAttributeValues: expressionAttributeValues
-  });
-  const dynamoResponse = await docClient.send(updateCommentCommand);
-  return Response.json(dynamoResponse);
 }
 
 
 export async function DELETE(request: NextRequest) {
-  const data = await request.json();
+  try {
+    const data = await request.json();
 
-  const boardId = data.boardId;
-  const columnId = data.columnId;
+    const boardId = data.boardId;
+    const columnId = parseInt(data.columnId);
+    const commentId = getCommentIdFromPath(request.nextUrl.pathname);
 
-  const commentId = getCommentIdFromPath(request.nextUrl.pathname);
+    if (!commentId) {
+      return Response.json({ error: 'Comment ID not found' }, { status: 400 });
+    }
 
-  console.log(boardId, columnId, commentId);
+    await decrementCommentLikes(boardId, columnId, commentId);
 
-  const updateExpression = "SET BoardColumns.#column_id.comments.#comment_id.comment_likes = BoardColumns.#column_id.comments.#comment_id.comment_likes - :val";
-
-  const expressionAttributeNames = {
-    "#column_id": columnId,
-    "#comment_id": commentId
+    return Response.json({ success: true });
+  } catch (error) {
+    console.error('Error decrementing comment likes:', error);
+    return Response.json({ error: 'Failed to decrement likes' }, { status: 500 });
   }
-  const expressionAttributeValues = {
-    ":val": 1
-  }
-
-  const updateCommentCommand = new UpdateCommand({
-    TableName: tableName as string,
-    Key: {
-      BoardId: boardId,
-    },
-    UpdateExpression: updateExpression,
-    ExpressionAttributeNames: expressionAttributeNames,
-    ExpressionAttributeValues: expressionAttributeValues
-  });
-  const dynamoResponse = await docClient.send(updateCommentCommand);
-  return Response.json(dynamoResponse);
 }

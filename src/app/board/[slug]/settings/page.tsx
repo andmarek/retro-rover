@@ -34,7 +34,7 @@ export default function BoardSettings({ params }: { params: Promise<{ slug: stri
         const jsonData = await response.json();
         const dynamoItem = jsonData.Item;
 
-        setBoardName(dynamoItem.BoardName);
+        setBoardName(dynamoItem.board_name);
         console.log(dynamoItem);
 
         return jsonData;

@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import { tableName, getBoard } from "@/app/lib/dynamo";
+import { getBoard } from "@/app/lib/postgres";
 
 export async function POST(request: NextRequest, context: { params: Promise<{ slug: string }> }) {
   try {
@@ -10,9 +10,9 @@ export async function POST(request: NextRequest, context: { params: Promise<{ sl
     const boardId: string = params.slug;
 
     // Verify the board exists
-    const dynamoBoardResponse = await getBoard(tableName, boardId);
+    const board = await getBoard(boardId);
     
-    if (!dynamoBoardResponse.Item) {
+    if (!board) {
       return NextResponse.json({ error: "Board not found" }, { status: 404 });
     }
 
