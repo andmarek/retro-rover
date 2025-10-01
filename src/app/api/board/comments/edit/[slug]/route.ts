@@ -1,16 +1,17 @@
 import { NextRequest } from "next/server";
 import { DynamoDBClient } from "@aws-sdk/client-dynamodb";
 import { DynamoDBDocumentClient, UpdateCommand } from "@aws-sdk/lib-dynamodb";
-import { tableName } from "@/src/app/lib/dynamo"
+import { tableName } from "@/app/lib/dynamo"
 
 
 const client = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(client);
 
 export async function POST(
-  request: Request,
-  { params }: { params: { slug: string } }
+  request: NextRequest,
+  context: { params: Promise<{ slug: string }> }
 ) {
+  const params = await context.params;
   const data = await request.json();
 
   const commentId = params.slug;

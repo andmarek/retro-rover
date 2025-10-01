@@ -5,7 +5,7 @@ import { socket } from "./socket";
 import SideBar from "./SideBar";
 import BoardStatusBar from "./BoardStatusBar";
 import BoardEntryView from "./BoardEntryView";
-import { useUser } from "@clerk/clerk-react";
+import { useSession } from "@/lib/auth-client";
 
 import {
   DndContext,
@@ -30,8 +30,8 @@ export default function Board(props: BoardProps) {
 
   const boardId = props.boardId;
 
-  const { user } = useUser();
-  const userId = user?.id;
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
 
   const [boardName, setBoardName] = useState("");
 
@@ -56,15 +56,8 @@ export default function Board(props: BoardProps) {
   const initialState = { columns: [] };
   const [boardState, dispatch] = useReducer(boardReducer, initialState);
 
-  // This is technically less secure than using a cookie, but it's a lot easier to implement.
-  // We will need to implement a cookie-based solution in the future.
-  const saveUserBoardAccess = (boardId: string, userName: string) => {
-    localStorage.setItem(`board_${boardId}_access`, JSON.stringify({
-      userName,
-      hasJoined: true,
-      timestamp: new Date().getTime()
-    }));
-  };
+  // Note: Board access is now handled by Better-Auth server-side sessions
+  // No need for localStorage-based access tracking
 
   function switchBlurBoard() {
     setBoardBlurred(!boardBlurred);
@@ -112,14 +105,14 @@ export default function Board(props: BoardProps) {
     fetchData();
   }, [boardId, userId, hasJoined]);
 
+  // Note: User access is now determined by Better-Auth session
+  // Auto-set user info when session is available
   useEffect(() => {
-    const savedAccess = localStorage.getItem(`board_${boardId}_access`);
-    if (savedAccess) {
-      const { userName, hasJoined } = JSON.parse(savedAccess);
-      setUserName(userName);
-      setHasJoined(hasJoined);
+    if (session?.user) {
+      setUserName(session.user.email || 'User');
+      setHasJoined(true);
     }
-  }, [boardId]);
+  }, [session]);
 
   /*
   TURNING OFF WEBSOCKETS FOR NOW.. maybe feature flag?
@@ -289,7 +282,6 @@ export default function Board(props: BoardProps) {
           boardId={boardId}
           setHasJoined={setHasJoined}
           setUserName={setUserName}
-          saveUserBoardAccess={saveUserBoardAccess}
           />
         ) : (
           <div className="grid w-full h-full">
@@ -316,7 +308,7 @@ export default function Board(props: BoardProps) {
                     <Column
                     key={column.columnId}
                     boardId={boardId}
-                    userId={user?.id}
+                    userId={userId}
                     name={column.columnName}
                     dispatch={dispatch}
                     currentText={column.currentText}

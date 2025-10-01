@@ -1,5 +1,5 @@
 "use client";
-import { useUser } from "@clerk/clerk-react";
+import { useSession } from "@/lib/auth-client";
 
 import React, { useEffect, useState } from "react";
 import {
@@ -14,8 +14,8 @@ export default function NewBoards() {
   const [boards, setBoards] = useState([]);
   const [filteredBoards, setFilteredBoards] = useState([]);
 
-  const { user } = useUser();
-  const userId = user?.id;
+  const { data: session } = useSession();
+  const userId = session?.user?.id;
 
   function handleSearch(event) {
     const searchKeyword = event.target.value.toLowerCase();

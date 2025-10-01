@@ -6,7 +6,6 @@ interface BoardEntryPageProps {
   boardId: string;
   setUserName: (username: string) => void;
   setHasJoined: (hasJoined: boolean) => void;
-  saveUserBoardAccess: (boardId: string, username: string) => void;
 }
 
 export default function BoardEntryView(props: BoardEntryPageProps) {
@@ -62,7 +61,7 @@ export default function BoardEntryView(props: BoardEntryPageProps) {
       
       if (response.ok) {
         props.setHasJoined(true);
-        props.saveUserBoardAccess(props.boardId, username);
+        // Note: User access is now tracked via Better-Auth sessions
       } else {
         console.error("Failed to join board:", responseJson);
         alert("Failed to join board: " + (responseJson.message || "Unknown error"));

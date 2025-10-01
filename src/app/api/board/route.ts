@@ -5,7 +5,7 @@ import {
   DynamoDBDocumentClient,
 } from "@aws-sdk/lib-dynamodb";
 
-import { tableName, getBoard } from "@/src/app/lib/dynamo";
+import { tableName, getBoard } from "@/app/lib/dynamo";
 
 const ddb = new DynamoDBClient({});
 const docClient = DynamoDBDocumentClient.from(ddb);
