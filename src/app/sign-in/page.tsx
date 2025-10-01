@@ -19,25 +19,33 @@ export default function Page() {
     setError("");
 
     try {
+      console.log("Starting auth request...", isSignUp ? "signUp" : "signIn");
+      
       if (isSignUp) {
         if (password !== confirmPassword) {
           setError("Passwords don't match");
           setIsLoading(false);
           return;
         }
-        await signUp.email({
+        console.log("Attempting sign up...");
+        const result = await signUp.email({
           email,
           password,
           name: email, // Use email as name for simplicity
         });
+        console.log("Sign up result:", result);
       } else {
-        await signIn.email({
+        console.log("Attempting sign in...");
+        const result = await signIn.email({
           email,
           password,
         });
+        console.log("Sign in result:", result);
       }
+      console.log("Auth successful, redirecting...");
       router.push("/");
     } catch (err: any) {
+      console.error("Auth error:", err);
       setError(err.message || "Authentication failed");
     } finally {
       setIsLoading(false);

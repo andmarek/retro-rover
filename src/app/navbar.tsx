@@ -31,7 +31,7 @@ function UserMenu({ user }: { user: any }) {
 }
 
 export default function NavBar() {
-  const { data: session, isPending } = useSession();
+  const { data: session, isPending, error } = useSession();
 
   return (
     <nav className="px-5 flex justify-between items-center">
@@ -39,7 +39,8 @@ export default function NavBar() {
         <NavLink linkText="Retro Rover" href="/" />
       </div>
       <div className="flex flex-row space-x-4 m-2">
-        {!isPending && (
+        {/* Always show basic navigation */}
+        {!isPending ? (
           <>
             {session?.user ? (
               <UserMenu user={session.user} />
@@ -52,6 +53,16 @@ export default function NavBar() {
             )}
             <NavLink linkText="Create" href="/create" />
           </>
+        ) : (
+          // Show basic nav while auth is loading
+          <>
+            <NavLink linkText="Sign In" href="/sign-in" />
+            <NavLink linkText="Home" href="/" />
+            <NavLink linkText="Create" href="/create" />
+          </>
+        )}
+        {error && (
+          <div className="text-red-500 text-xs">Auth Error</div>
         )}
       </div>
     </nav>

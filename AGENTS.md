@@ -2,7 +2,7 @@
 
 ## Project Overview
 
-**EXPF** is a **free retrospective board application** built to replace expensive paid alternatives like Trello or commercial retro tools. The primary motivation is to provide sprint retrospective functionality that's "easy, effective, and enjoyable" without pay-to-play restrictions.
+**RetroRover** is a **free retrospective board application** built to replace expensive paid alternatives like Trello or commercial retro tools. The primary motivation is to provide sprint retrospective functionality that's "easy, effective, and enjoyable" without pay-to-play restrictions.
 
 ### What This Application Does
 - **Sprint Retrospective Boards**: Teams can create collaborative boards for sprint retrospectives
@@ -10,6 +10,7 @@
 - **Drag & Drop**: Comments can be moved between columns using drag-and-drop functionality
 - **Comment System**: Full CRUD operations on comments with like/unlike functionality
 - **Board Management**: Create, join, and manage retrospective boards with customizable columns
+
 
 ## Architecture & Tech Stack
 
@@ -182,6 +183,11 @@ npm run build  # Production build
 npm run start  # Production server
 npm run lint   # ESLint
 ```
+
+```bash
+export PATH="/Users/andy/.config//nvm/versions/node/v22.19.0/bin:$PATH" && npm [command]
+```
+
 
 ## Working With This Codebase
 
