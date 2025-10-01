@@ -4,9 +4,9 @@ import { useEffect, useState, use } from "react";
 import { useSession } from "@/lib/auth-client";
 import {
   Button,
-  Link,
-  TextFieldInput
+  Link
 } from "@radix-ui/themes";
+import { Input } from "@/components/ui/input";
 
 export default function BoardSettings({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params);
@@ -59,7 +59,7 @@ export default function BoardSettings({ params }: { params: Promise<{ slug: stri
           <div>
             <h3 className="text-lg mb-2">Board Name</h3>
             <div className="flex items-center justify-between">
-              <TextFieldInput placeholder={`${boardName}`} />
+              <Input placeholder={`${boardName}`} />
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Save
               </button>
@@ -68,7 +68,7 @@ export default function BoardSettings({ params }: { params: Promise<{ slug: stri
           <div>
             <h3 className="text-lg mb-2">Board Password</h3>
             <div className="flex items-center justify-between">
-              <TextFieldInput placeholder={`${boardName}`} />
+              <Input placeholder={`${boardName}`} />
               <button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Save
               </button>

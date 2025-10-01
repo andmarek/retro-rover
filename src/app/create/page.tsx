@@ -8,8 +8,8 @@ import { useSession } from "@/lib/auth-client";
 import {
   Heading,
   Button,
-  TextField,
-} from "@radix-ui/themes"
+} from "@radix-ui/themes";
+import { Input } from "@/components/ui/input";
 
 
 const initialTemplate = "Classic";
@@ -137,11 +137,11 @@ export default function CreateBoard() {
         <div className="my-2">
           <div className="flex flex-col space-y-2 my-2">
             <Heading className="self-center">Board Name</Heading>
-            <TextField.Input name="boardName" onChange={(e) => { setBoardName(e.target.value) }} placeholder="Enter a board name..."></TextField.Input>
+            <Input name="boardName" onChange={(e) => { setBoardName(e.target.value) }} placeholder="Enter a board name..." />
           </div>
           <div className="flex flex-col space-y-2 my-2">
             <Heading className="self-center">Board Description</Heading>
-            <TextField.Input name="boardDescription" onChange={(e) => { setBoardDescription(e.target.value) }} placeholder="Enter a board description..."></TextField.Input>
+            <Input name="boardDescription" onChange={(e) => { setBoardDescription(e.target.value) }} placeholder="Enter a board description..." />
           </div>
         </div>
 
@@ -184,7 +184,7 @@ export default function CreateBoard() {
           <ul className="flex flex-col space-y-2 my-2 place-items-center">
             {boardColumns.map((column, index) => (
               <li key={index} className="flex flex-row place-items-center space-x-2">
-                <TextField.Input name={`column-${index}`} onChange={(e) => changeColumnName(e.target.value, index)} value={column.columnName}></TextField.Input>
+                <Input name={`column-${index}`} onChange={(e) => changeColumnName(e.target.value, index)} value={column.columnName} />
                 <Cross1Icon className="hover:text-coolors-red text-red-light cursor-pointer" onClick={() => removeColumn(index)} />
               </li>
             )

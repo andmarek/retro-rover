@@ -1,3 +1,4 @@
+import React from "react";
 import "@radix-ui/themes/styles.css";
 import { Inter } from "next/font/google";
 import { Theme } from "@radix-ui/themes";
@@ -12,7 +13,7 @@ export const metadata = {
   description: "A simplified way to run sprint retrospectives",
 };
 
-export default function RootLayout({ children }) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html suppressHydrationWarning lang="en" className={GeistSans.className}>
       <body className={inter.className}>

@@ -219,7 +219,7 @@ export default function Comment({
           )}
           <p className="text-radix-mintDefault"> {commentObj.comment_likes} </p>
           <Dialog.Root>
-            <Dialog.Trigger asChild>
+            <Dialog.Trigger>
               <CommentButtonIcon
                 icon={<Pencil1Icon />}
                 onClick={() => openEditCommentModal()}
