@@ -78,7 +78,7 @@ export default function BoardEntryView(props: BoardEntryPageProps) {
         <form className="flex flex-col space-y-2" onSubmit={submitForm}>
           <h1> Joining {boardName} </h1>
           <h1> Please provide a username </h1>
-          <TextField.Input value={username} onChange={(e) => setUsername(e.target.value)} />
+          <TextField.Root value={username} onChange={(e) => setUsername(e.target.value)} />
           <Button type="submit" size="3" variant="soft">
             {" "}
             Join{" "}

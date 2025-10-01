@@ -42,7 +42,7 @@ export default function Comment({
     data: commentObj,
   });
 
-  const style = transform ? {
+  const style = transform && typeof transform.x === 'number' && typeof transform.y === 'number' ? {
     transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
   } : undefined;
 
@@ -219,7 +219,7 @@ export default function Comment({
           )}
           <p className="text-radix-mintDefault"> {commentObj.comment_likes} </p>
           <Dialog.Root>
-            <Dialog.Trigger>
+            <Dialog.Trigger asChild>
               <CommentButtonIcon
                 icon={<Pencil1Icon />}
                 onClick={() => openEditCommentModal()}

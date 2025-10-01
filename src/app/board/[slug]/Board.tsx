@@ -24,7 +24,9 @@ export default function Board(props: BoardProps) {
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
-      activationConstraint: { delay: 250, distance: 5 },
+      activationConstraint: { 
+        distance: 8,
+      },
     })
   );
 
@@ -221,11 +223,11 @@ export default function Board(props: BoardProps) {
   }
 
   async function handleDragEnd(event: any) {
-    const { over, active } = event;
+    const { over, active } = event || {};
 
     console.log(over, active);
 
-    if (!over || !active) {
+    if (!over || !active || !active.id || !over.id) {
       return;
     }
     const [sourceColumnId, sourceCommentId] = active.id.split("_");
