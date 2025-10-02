@@ -1,35 +1,29 @@
-import React from "react";
-import "@radix-ui/themes/styles.css";
-import { Inter } from "next/font/google";
-import { Theme } from "@radix-ui/themes";
-import "./globals.css";
-import { GeistSans } from "geist/font/sans";
-import NavBar from "./navbar";
 
-const inter = Inter({ subsets: ["latin"] });
+import type React from "react"
+import type { Metadata } from "next"
+import { GeistSans } from "geist/font/sans"
+import { GeistMono } from "geist/font/mono"
+import { Suspense } from "react"
+import "./globals.css"
 
-export const metadata = {
-  title: "RetroRover",
-  description: "A simplified way to run sprint retrospectives",
-};
+export const metadata: Metadata = {
+  title: "Retrospective - Better Team Retrospectives",
+  description:
+    "Run engaging agile retrospectives with your team. Create boards, collaborate in real-time, and drive continuous improvement.",
+  generator: "v0.app",
+}
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode
+}>) {
   return (
-    <html suppressHydrationWarning lang="en" className={GeistSans.className}>
-      <body className={inter.className}>
-        <NavBar />
-        <Theme
-          appearance="dark"
-          grayColor="gray"
-          accentColor="mint"
-          radius="large"
-          scaling="100%"
-          panelBackground="translucent"
-        >
-          {" "}
-          {children}{" "}
-        </Theme>
+    <html lang="en">
+      <body className={`font-sans ${GeistSans.variable} ${GeistMono.variable}`}>
+        <Suspense fallback={<div>Loading...</div>}>{children}</Suspense>
       </body>
     </html>
-  );
+  )
 }
+
