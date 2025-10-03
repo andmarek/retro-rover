@@ -20,19 +20,22 @@ export default function Page() {
 
     try {
       console.log("Starting auth request...", isSignUp ? "signUp" : "signIn");
-      
+
       if (isSignUp) {
         if (password !== confirmPassword) {
           setError("Passwords don't match");
           setIsLoading(false);
           return;
         }
-        console.log("Attempting sign up...");
+
+        console.log("Attempting sign up");
+
         const result = await signUp.email({
           email,
           password,
-          name: email, // Use email as name for simplicity
+          name: email, // Use email as name for now
         });
+
         console.log("Sign up result:", result);
       } else {
         console.log("Attempting sign in...");
@@ -42,7 +45,9 @@ export default function Page() {
         });
         console.log("Sign in result:", result);
       }
-      console.log("Auth successful, redirecting...");
+
+      console.log("Auth successful, redirecting");
+
       router.push("/");
     } catch (err: any) {
       console.error("Auth error:", err);
@@ -72,15 +77,15 @@ export default function Page() {
                 Email address
               </label>
               <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Email address"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+              id="email"
+              name="email"
+              type="email"
+              autoComplete="email"
+              required
+              className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Email address"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div>
@@ -88,15 +93,15 @@ export default function Page() {
                 Password
               </label>
               <input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+              id="password"
+              name="password"
+              type="password"
+              autoComplete="current-password"
+              required
+              className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
               />
             </div>
             {isSignUp && (
@@ -105,15 +110,15 @@ export default function Page() {
                   Confirm Password
                 </label>
                 <input
-                  id="confirm-password"
-                  name="confirm-password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Confirm Password"
-                  value={confirmPassword}
-                  onChange={(e) => setConfirmPassword(e.target.value)}
+                id="confirm-password"
+                name="confirm-password"
+                type="password"
+                autoComplete="new-password"
+                required
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
                 />
               </div>
             )}
@@ -138,8 +143,8 @@ export default function Page() {
                 setError("");
               }}
             >
-              {isSignUp 
-                ? "Already have an account? Sign in" 
+              {isSignUp
+                ? "Already have an account? Sign in"
                 : "Don't have an account? Sign up"}
             </button>
           </div>

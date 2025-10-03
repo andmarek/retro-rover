@@ -12,7 +12,6 @@ export const {
   signUp, 
   signOut, 
   useSession,
-  // Additional methods you might need
   updateUser,
   changeEmail,
   changePassword,

@@ -1,6 +1,11 @@
+"use client";
+
 import { Button } from "@/components/ui/button"
+import { useSession, signOut } from "@/lib/auth-client"
 
 export function Header() {
+  const { data: session, isPending, error } = useSession();
+
   return (
     <header className="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border">
       <div className="container mx-auto px-6 lg:px-8">
@@ -21,7 +26,16 @@ export function Header() {
 
           <div className="flex items-center gap-3">
             <Button variant="ghost" size="sm" className="hidden md:inline-flex" >
-              <a href="/sign-in">Log in</a>
+              {session?.user ?
+                (
+                  <div className="flex items-center gap-2">
+                    <span className="text-sm font-medium">{session.user.name}</span>
+                    <span className="text-sm font-medium"><a href="/myBoards"> My Boards </a></span>
+
+                  </div>
+                )
+                :
+                (<a href="/sign-in">Login</a>)}
             </Button>
             <Button size="sm">Demo</Button>
           </div>
