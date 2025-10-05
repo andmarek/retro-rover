@@ -331,21 +331,19 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     )
   }
 
-  // Group cards by column type based on column order
-  const columnsByType: Record<ColumnType, RetroCard[]> = {
-    "went-well": [],
-    "to-improve": [],
-    "action-items": [],
-  }
-
+  // Prepare columns data
   const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
   const columnTypes: ColumnType[] = ["went-well", "to-improve", "action-items"]
+  const accentColors = ["accent", "destructive", "primary"] as const
   
-  sortedColumns.forEach((column, index) => {
-    if (index < columnTypes.length) {
-      columnsByType[columnTypes[index]] = column.comments.map(convertToRetroCard)
-    }
-  })
+  // Map columns from database to renderable column data
+  const columnsToRender = sortedColumns.slice(0, 3).map((column, index) => ({
+    title: column.column_name,
+    description: "", // Could add column descriptions to database schema in future
+    columnType: columnTypes[index],
+    cards: column.comments.map(convertToRetroCard),
+    accentColor: accentColors[index]
+  }))
 
   return (
     <div className="min-h-screen p-6 md:p-8 lg:p-12">
@@ -375,37 +373,20 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
         </header>
 
         {/* Columns Grid */}
-        <div className="grid gap-6 md:grid-cols-3">
-          <RetroColumn
-            title="What Went Well"
-            description="Celebrate successes and positive outcomes"
-            columnType="went-well"
-            cards={columnsByType["went-well"]}
-            onAddCard={addCard}
-            onDeleteCard={deleteCard}
-            onVoteCard={voteCard}
-            accentColor="accent"
-          />
-          <RetroColumn
-            title="To Improve"
-            description="Identify challenges and areas for growth"
-            columnType="to-improve"
-            cards={columnsByType["to-improve"]}
-            onAddCard={addCard}
-            onDeleteCard={deleteCard}
-            onVoteCard={voteCard}
-            accentColor="destructive"
-          />
-          <RetroColumn
-            title="Action Items"
-            description="Concrete steps for the next sprint"
-            columnType="action-items"
-            cards={columnsByType["action-items"]}
-            onAddCard={addCard}
-            onDeleteCard={deleteCard}
-            onVoteCard={voteCard}
-            accentColor="primary"
-          />
+        <div className={`grid gap-6 md:grid-cols-${Math.min(sortedColumns.length, 3)}`}>
+          {columnsToRender.map((col) => (
+            <RetroColumn
+              key={col.columnType}
+              title={col.title}
+              description={col.description}
+              columnType={col.columnType}
+              cards={col.cards}
+              onAddCard={addCard}
+              onDeleteCard={deleteCard}
+              onVoteCard={voteCard}
+              accentColor={col.accentColor}
+            />
+          ))}
         </div>
       </div>
     </div>
