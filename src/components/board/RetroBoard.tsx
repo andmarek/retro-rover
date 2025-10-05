@@ -172,7 +172,31 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
 
       if (response.ok) {
         console.log("Card added successfully")
-        await fetchBoardData() // Refresh board data
+        // Optimistically update local state instead of refetching
+        setBoardData(prev => {
+          if (!prev) return prev
+          const updatedColumns = prev.columns.map(col => {
+            if (col.column_id === column.column_id) {
+              return {
+                ...col,
+                comments: [
+                  ...col.comments,
+                  {
+                    comment_id: commentId,
+                    comment_text: content,
+                    comment_likes: 0,
+                    board_id: boardId,
+                    column_id: column.column_id,
+                    created_at: new Date(),
+                    updated_at: new Date(),
+                  }
+                ]
+              }
+            }
+            return col
+          })
+          return { ...prev, columns: updatedColumns }
+        })
       } else {
         const error = await response.json()
         console.error("Failed to add card:", error)
@@ -205,7 +229,20 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
       })
 
       if (response.ok) {
-        await fetchBoardData() // Refresh board data
+        // Optimistically update local state
+        setBoardData(prev => {
+          if (!prev) return prev
+          const updatedColumns = prev.columns.map(col => {
+            if (col.column_id === column.column_id) {
+              return {
+                ...col,
+                comments: col.comments.filter(c => c.comment_id !== cardId)
+              }
+            }
+            return col
+          })
+          return { ...prev, columns: updatedColumns }
+        })
       }
     } catch (error) {
       console.error("Error deleting card:", error)
@@ -235,7 +272,24 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
       })
 
       if (response.ok) {
-        await fetchBoardData() // Refresh board data
+        // Optimistically update local state
+        setBoardData(prev => {
+          if (!prev) return prev
+          const updatedColumns = prev.columns.map(col => {
+            if (col.column_id === column.column_id) {
+              return {
+                ...col,
+                comments: col.comments.map(c => 
+                  c.comment_id === cardId 
+                    ? { ...c, comment_likes: c.comment_likes + 1 }
+                    : c
+                )
+              }
+            }
+            return col
+          })
+          return { ...prev, columns: updatedColumns }
+        })
       }
     } catch (error) {
       console.error("Error voting on card:", error)

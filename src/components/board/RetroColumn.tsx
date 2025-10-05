@@ -32,6 +32,7 @@ export function RetroColumn({
   const [isAdding, setIsAdding] = useState(false)
 
   const handleAddCard = (content: string) => {
+    console.log("HandleAddCard");
     onAddCard(columnType, content)
     setIsAdding(false)
   }
