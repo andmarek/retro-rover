@@ -134,11 +134,27 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   }, [fetchBoardData, boardId])
 
   const addCard = async (columnType: ColumnType, content: string) => {
-    if (!boardData) return
+    console.log("Adding card", { columnType, content })
+    if (!boardData) {
+      console.error("Board data not available");
+      return
+    }
     
-    // Find the actual column ID for this column type
-    const column = boardData.columns.find(col => getColumnType(col.column_name, col.column_id) === columnType)
-    if (!column) return
+    // Map column types to column indices (0, 1, 2)
+    const columnIndex = columnType === "went-well" ? 0 : columnType === "to-improve" ? 1 : 2
+    
+    // Get the column by order (sorted columns)
+    const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
+    const column = sortedColumns[columnIndex]
+    
+    if (!column) {
+      console.error("Column not found for type:", columnType, "index:", columnIndex);
+      console.log("Available columns:", boardData.columns)
+      return
+    }
+
+    // Generate a unique comment ID
+    const commentId = crypto.randomUUID()
 
     try {
       const response = await fetch("/api/boards/comments", {
@@ -149,12 +165,17 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
         body: JSON.stringify({
           boardId,
           columnId: column.column_id,
+          commentId,
           commentText: content,
         }),
       })
 
       if (response.ok) {
+        console.log("Card added successfully")
         await fetchBoardData() // Refresh board data
+      } else {
+        const error = await response.json()
+        console.error("Failed to add card:", error)
       }
     } catch (error) {
       console.error("Error adding card:", error)
@@ -164,8 +185,10 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const deleteCard = async (columnType: ColumnType, cardId: string) => {
     if (!boardData) return
     
-    // Find the actual column ID for this column type
-    const column = boardData.columns.find(col => getColumnType(col.column_name, col.column_id) === columnType)
+    // Map column types to column indices
+    const columnIndex = columnType === "went-well" ? 0 : columnType === "to-improve" ? 1 : 2
+    const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
+    const column = sortedColumns[columnIndex]
     if (!column) return
 
     try {
@@ -192,8 +215,10 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const voteCard = async (columnType: ColumnType, cardId: string) => {
     if (!boardData) return
     
-    // Find the actual column ID for this column type
-    const column = boardData.columns.find(col => getColumnType(col.column_name, col.column_id) === columnType)
+    // Map column types to column indices
+    const columnIndex = columnType === "went-well" ? 0 : columnType === "to-improve" ? 1 : 2
+    const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
+    const column = sortedColumns[columnIndex]
     if (!column) return
 
     try {
@@ -252,16 +277,20 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     )
   }
 
-  // Group cards by column type
+  // Group cards by column type based on column order
   const columnsByType: Record<ColumnType, RetroCard[]> = {
     "went-well": [],
     "to-improve": [],
     "action-items": [],
   }
 
-  boardData.columns.forEach(column => {
-    const columnType = getColumnType(column.column_name, column.column_id)
-    columnsByType[columnType] = column.comments.map(convertToRetroCard)
+  const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
+  const columnTypes: ColumnType[] = ["went-well", "to-improve", "action-items"]
+  
+  sortedColumns.forEach((column, index) => {
+    if (index < columnTypes.length) {
+      columnsByType[columnTypes[index]] = column.comments.map(convertToRetroCard)
+    }
   })
 
   return (
