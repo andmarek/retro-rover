@@ -14,17 +14,18 @@
 
 ## Architecture & Tech Stack
 
+### Preferences
+- I prefer to use Shadcn UI for components
+
 ### Frontend
-- **Next.js 14** with App Router
-- **React 18** with TypeScript
+- **Next.js 15** with App Router
+- **React 19** with TypeScript
 - **Tailwind CSS** for styling
-- **Radix UI** for components (@radix-ui/themes, @radix-ui/react-icons)
+- **Shadcn UI** for components (@radix-ui/themes, @radix-ui/react-icons)
 - **@dnd-kit/core** for drag-and-drop functionality
-- **Clerk** (@clerk/nextjs) for authentication
 
 ### Backend & Database
 - **Next.js API Routes** (App Router format)
-- **AWS KMS** for encryption (currently disabled for passwords)
 - **Socket.io** for real-time features (currently disabled - see notes)
 
 ### Key Dependencies
@@ -117,7 +118,7 @@ export async function POST(req: Request, { params }: { params: { slug: string } 
 ## Environment Variables Required
 ```bash
 BOARDS_DYNAMODB_TABLE=          # Main boards table
-USERS_DYNAMODB_TABLE=           # Users table  
+USERS_DYNAMODB_TABLE=           # Users table
 AWS_BOARD_PASSWORDS_KMS_KEY_ID= # KMS key (unused)
 WEBHOOK_SECRET=                 # Clerk webhook secret
 ```
