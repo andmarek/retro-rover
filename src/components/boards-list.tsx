@@ -12,6 +12,8 @@ import {
 import { MoreHorizontal, Users, MessageSquare } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
 import { useEffect, useState } from "react"
+import { useRouter } from "next/navigation"
+import { useNotImplementedToast } from "@/components/not-implemented-toast"
 
 interface Board {
   id: string
@@ -45,6 +47,8 @@ export function BoardsList() {
   const [boards, setBoards] = useState<Board[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const router = useRouter()
+  const { showNotImplemented } = useNotImplementedToast()
 
   useEffect(() => {
     async function fetchBoards() {
@@ -131,14 +135,18 @@ export function BoardsList() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Open Board</DropdownMenuItem>
-              <DropdownMenuItem>Duplicate</DropdownMenuItem>
-              <DropdownMenuItem>Share</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => router.push(`/boards/${board.id}`)}>
+                Open Board
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={showNotImplemented}>Duplicate</DropdownMenuItem>
+              <DropdownMenuItem onClick={showNotImplemented}>Share</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Export</DropdownMenuItem>
-              <DropdownMenuItem>Archive</DropdownMenuItem>
+              <DropdownMenuItem onClick={showNotImplemented}>Export</DropdownMenuItem>
+              <DropdownMenuItem onClick={showNotImplemented}>Archive</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="text-destructive">Delete</DropdownMenuItem>
+              <DropdownMenuItem className="text-destructive" onClick={showNotImplemented}>
+                Delete
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
