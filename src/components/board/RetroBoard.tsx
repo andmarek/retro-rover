@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Download, Share2 } from "lucide-react"
 import { BoardWithColumnsAndComments } from "@/app/lib/postgres"
 import { webSocketManager } from "@/lib/websocket"
+import { DndContext, DragEndEvent, useSensors, useSensor, PointerSensor } from "@dnd-kit/core"
 
 interface RetroCardData extends RetroCard {
   comment_id: string
@@ -33,6 +34,14 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const [boardData, setBoardData] = useState<BoardWithColumnsAndComments | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const sensors = useSensors(
+    useSensor(PointerSensor, {
+      activationConstraint: {
+        distance: 8,
+      },
+    })
+  )
 
   // Convert database cards to RetroCard format
   const convertToRetroCard = (dbCard: any): RetroCard => ({
@@ -296,6 +305,87 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     }
   }
 
+  const handleDragEnd = async (event: DragEndEvent) => {
+    const { active, over } = event
+
+    if (!over || !active.data.current || !boardData) return
+
+    const sourceColumnType = active.data.current.columnType as ColumnType
+    const targetColumnType = over.data.current?.columnType as ColumnType
+    const draggedCardId = active.data.current.cardId as string
+
+    if (sourceColumnType === targetColumnType) return
+
+    // Get column indices
+    const sourceColumnIndex = sourceColumnType === "went-well" ? 0 : sourceColumnType === "to-improve" ? 1 : 2
+    const targetColumnIndex = targetColumnType === "went-well" ? 0 : targetColumnType === "to-improve" ? 1 : 2
+
+    const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
+    const sourceColumn = sortedColumns[sourceColumnIndex]
+    const targetColumn = sortedColumns[targetColumnIndex]
+
+    if (!sourceColumn || !targetColumn) return
+
+    // Find the dragged card
+    const draggedCard = sourceColumn.comments.find(c => c.comment_id === draggedCardId)
+    if (!draggedCard) return
+
+    // Store previous state for rollback
+    const previousBoardData = boardData
+
+    // Optimistically update the UI
+    setBoardData((prev) => {
+      if (!prev) return prev
+
+      const updatedColumns = prev.columns.map((col) => {
+        // Remove card from source column
+        if (col.column_id === sourceColumn.column_id) {
+          return {
+            ...col,
+            comments: col.comments.filter((c) => c.comment_id !== draggedCardId),
+          }
+        }
+        // Add card to destination column
+        if (col.column_id === targetColumn.column_id) {
+          return {
+            ...col,
+            comments: [...col.comments, draggedCard],
+          }
+        }
+        return col
+      })
+
+      return { ...prev, columns: updatedColumns }
+    })
+
+    try {
+      const response = await fetch(`/api/boards/comments/move/${boardId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          boardId,
+          sourceColumnId: sourceColumn.column_id,
+          destinationColumnId: targetColumn.column_id,
+          sourceCommentId: draggedCard.comment_id,
+          commentText: draggedCard.comment_text,
+          commentLikes: draggedCard.comment_likes,
+        }),
+      })
+
+      if (!response.ok) {
+        // Rollback on failure
+        console.error("Failed to move card, rolling back")
+        setBoardData(previousBoardData)
+      }
+    } catch (error) {
+      console.error("Error moving card:", error)
+      // Rollback on error
+      setBoardData(previousBoardData)
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -373,21 +463,23 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
         </header>
 
         {/* Columns Grid */}
-        <div className={`grid gap-6 md:grid-cols-${Math.min(sortedColumns.length, 3)}`}>
-          {columnsToRender.map((col) => (
-            <RetroColumn
-              key={col.columnType}
-              title={col.title}
-              description={col.description}
-              columnType={col.columnType}
-              cards={col.cards}
-              onAddCard={addCard}
-              onDeleteCard={deleteCard}
-              onVoteCard={voteCard}
-              accentColor={col.accentColor}
-            />
-          ))}
-        </div>
+        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+          <div className={`grid gap-6 md:grid-cols-${Math.min(sortedColumns.length, 3)}`}>
+            {columnsToRender.map((col) => (
+              <RetroColumn
+                key={col.columnType}
+                title={col.title}
+                description={col.description}
+                columnType={col.columnType}
+                cards={col.cards}
+                onAddCard={addCard}
+                onDeleteCard={deleteCard}
+                onVoteCard={voteCard}
+                accentColor={col.accentColor}
+              />
+            ))}
+          </div>
+        </DndContext>
       </div>
     </div>
   )

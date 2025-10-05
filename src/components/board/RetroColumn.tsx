@@ -5,6 +5,7 @@ import type { RetroCard as RetroCardType } from "./RetroCard"
 import { RetroCard } from "./RetroCard"
 import { RetroInput } from "./RetroInput"
 import { cn } from "@/lib/utils"
+import { useDroppable, useDraggable } from "@dnd-kit/core"
 
 export type ColumnType = "went-well" | "to-improve" | "action-items"
 
@@ -19,6 +20,39 @@ type RetroColumnProps = {
   accentColor: "primary" | "accent" | "destructive"
 }
 
+function DraggableCard({ 
+  card, 
+  columnType,
+  onDelete, 
+  onVote 
+}: { 
+  card: RetroCardType
+  columnType: ColumnType
+  onDelete: () => void
+  onVote: () => void
+}) {
+  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+    id: `card-${card.id}`,
+    data: {
+      cardId: card.id,
+      columnType,
+    },
+  })
+
+  const style = transform
+    ? {
+        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+        opacity: isDragging ? 0.5 : 1,
+      }
+    : undefined
+
+  return (
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      <RetroCard card={card} onDelete={onDelete} onVote={onVote} />
+    </div>
+  )
+}
+
 export function RetroColumn({
   title,
   description,
@@ -30,6 +64,13 @@ export function RetroColumn({
   accentColor,
 }: RetroColumnProps) {
   const [isAdding, setIsAdding] = useState(false)
+
+  const { setNodeRef } = useDroppable({
+    id: `column-${columnType}`,
+    data: {
+      columnType,
+    },
+  })
 
   const handleAddCard = (content: string) => {
     console.log("HandleAddCard");
@@ -52,7 +93,7 @@ export function RetroColumn({
       </div>
 
       {/* Cards Container */}
-      <div className="flex flex-1 flex-col gap-3 rounded-xl border border-border bg-card/50 p-4 backdrop-blur-sm">
+      <div ref={setNodeRef} className="flex flex-1 flex-col gap-3 rounded-xl border border-border bg-card/50 p-4 backdrop-blur-sm">
         {cards.length === 0 && !isAdding && (
           <div className="flex flex-1 items-center justify-center py-12">
             <p className="text-sm text-muted-foreground">No cards yet. Add one to get started!</p>
@@ -62,9 +103,10 @@ export function RetroColumn({
         {cards
           .sort((a, b) => b.votes - a.votes)
           .map((card) => (
-            <RetroCard
+            <DraggableCard
               key={card.id}
               card={card}
+              columnType={columnType}
               onDelete={() => onDeleteCard(columnType, card.id)}
               onVote={() => onVoteCard(columnType, card.id)}
             />

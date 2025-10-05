@@ -208,6 +208,36 @@ export default function Board({ boardId }: BoardProps) {
 
     if (sourceColumnId === targetColumnId) return;
 
+    // Store previous state for rollback
+    const previousBoardData = boardData;
+
+    // Optimistically update the UI
+    setBoardData((prev) => {
+      if (!prev) return prev;
+
+      const updatedColumns = prev.columns.map((col) => {
+        // Remove card from source column
+        if (col.column_id === sourceColumnId) {
+          return {
+            ...col,
+            comments: col.comments.filter(
+              (c) => c.comment_id !== draggedCard.comment_id
+            ),
+          };
+        }
+        // Add card to destination column
+        if (col.column_id === targetColumnId) {
+          return {
+            ...col,
+            comments: [...col.comments, draggedCard],
+          };
+        }
+        return col;
+      });
+
+      return { ...prev, columns: updatedColumns };
+    });
+
     try {
       const response = await fetch(`/api/boards/comments/move/${boardId}`, {
         method: "POST",
@@ -215,19 +245,24 @@ export default function Board({ boardId }: BoardProps) {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          commentId: draggedCard.comment_id,
+          boardId,
           sourceColumnId,
           destinationColumnId: targetColumnId,
+          sourceCommentId: draggedCard.comment_id,
           commentText: draggedCard.comment_text,
           commentLikes: draggedCard.comment_likes,
         }),
       });
 
-      if (response.ok) {
-        await fetchBoardData(); // Refresh board data
+      if (!response.ok) {
+        // Rollback on failure
+        console.error("Failed to move card, rolling back");
+        setBoardData(previousBoardData);
       }
     } catch (error) {
       console.error("Error moving card:", error);
+      // Rollback on error
+      setBoardData(previousBoardData);
     }
   };
 
