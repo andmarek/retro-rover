@@ -29,3 +29,15 @@ export async function POST(request: NextRequest, context: { params: Promise<{ sl
     );
   }
 }
+
+export async function GET() {
+  try {
+    // TODO: Implement GET endpoint if needed
+    return NextResponse.json({ message: "GET endpoint not implemented" });
+  } catch (error) {
+    return NextResponse.json(
+      { error: "Failed to process request" },
+      { status: 500 }
+    );
+  }
+}

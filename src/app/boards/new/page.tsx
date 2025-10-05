@@ -55,10 +55,14 @@ export default function NewBoardPage() {
   const [isPrivate, setIsPrivate] = useState(false)
   const [allowAnonymous, setAllowAnonymous] = useState(true)
   const [enableVoting, setEnableVoting] = useState(true)
-  const [errors, setErrors] = useState<{ name?: string; template?: string }>({})
+  const [errors, setErrors] = useState<{ name?: string; template?: string; submit?: string }>({})
+  const [isCreating, setIsCreating] = useState(false)
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
+
+    // Clear previous errors
+    setErrors({})
 
     // Validation
     const newErrors: { name?: string; template?: string } = {}
@@ -74,22 +78,38 @@ export default function NewBoardPage() {
       return
     }
 
-    console.log("[v0] Board creation data:", {
-      name,
-      template,
-      description,
-      teamMembers: teamMembers
-        .split(",")
-        .map((m) => m.trim())
-        .filter(Boolean),
-      isPrivate,
-      allowAnonymous,
-      enableVoting,
-    })
-    // TODO: Implement board creation logic
+    setIsCreating(true)
 
-    // Navigate back to boards list
-    router.push("/boards")
+    try {
+      const response = await fetch("/api/boards", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: name.trim(),
+          description: description.trim() || undefined,
+          template,
+        }),
+      })
+
+      if (!response.ok) {
+        const errorData = await response.json()
+        throw new Error(errorData.error || "Failed to create board")
+      }
+
+      const createdBoard = await response.json()
+      
+      // Navigate to the created board
+      router.push(`/boards/${createdBoard.id}`)
+    } catch (error) {
+      console.error("Error creating board:", error)
+      setErrors({
+        submit: error instanceof Error ? error.message : "Failed to create board"
+      })
+    } finally {
+      setIsCreating(false)
+    }
   }
 
   const selectedTemplate = templates.find((t) => t.value === template)
@@ -275,13 +295,26 @@ export default function NewBoardPage() {
             </CardContent>
           </Card>
 
+          {/* Error Display */}
+          {errors.submit && (
+            <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
+              <p className="text-sm text-destructive">{errors.submit}</p>
+            </div>
+          )}
+
           {/* Actions */}
           <div className="flex gap-3 justify-end">
-            <Button type="button" variant="outline" size="lg" onClick={() => router.push("/boards")}>
+            <Button 
+              type="button" 
+              variant="outline" 
+              size="lg" 
+              onClick={() => router.push("/boards")}
+              disabled={isCreating}
+            >
               Cancel
             </Button>
-            <Button type="submit" size="lg">
-              Create Board
+            <Button type="submit" size="lg" disabled={isCreating}>
+              {isCreating ? "Creating..." : "Create Board"}
             </Button>
           </div>
         </form>

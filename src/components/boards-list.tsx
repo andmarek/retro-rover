@@ -11,62 +11,18 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { MoreHorizontal, Users, MessageSquare } from "lucide-react"
 import { formatDistanceToNow } from "date-fns"
+import { useEffect, useState } from "react"
 
-// Mock data for demonstration
-const boards = [
-  {
-    id: "1",
-    name: "Sprint 24 Retrospective",
-    status: "active",
-    template: "Start/Stop/Continue",
-    lastModified: new Date(Date.now() - 1000 * 60 * 12),
-    itemCount: 23,
-  },
-  {
-    id: "2",
-    name: "Q4 Team Retrospective",
-    status: "completed",
-    template: "Mad/Sad/Glad",
-    lastModified: new Date(Date.now() - 1000 * 60 * 60 * 2),
-    itemCount: 18,
-  },
-  {
-    id: "3",
-    name: "Product Launch Retro",
-    status: "active",
-    template: "4Ls (Liked/Learned/Lacked/Longed)",
-    lastModified: new Date(Date.now() - 1000 * 60 * 60 * 5),
-    itemCount: 31,
-
-  },
-  {
-    id: "4",
-    name: "Sprint 23 Retrospective",
-    status: "archived",
-    template: "Start/Stop/Continue",
-    lastModified: new Date(Date.now() - 1000 * 60 * 60 * 24 * 2),
-    itemCount: 15,
-
-  },
-  {
-    id: "5",
-    name: "Design System Review",
-    status: "active",
-    template: "Sailboat",
-    lastModified: new Date(Date.now() - 1000 * 60 * 60 * 24),
-    itemCount: 27,
-
-  },
-  {
-    id: "6",
-    name: "Engineering Offsite Retro",
-    status: "completed",
-    template: "Start/Stop/Continue",
-    lastModified: new Date(Date.now() - 1000 * 60 * 60 * 24 * 7),
-    itemCount: 42,
-
-  },
-]
+interface Board {
+  id: string
+  name: string
+  description?: string
+  status: string
+  template: string
+  lastModified: Date
+  itemCount: number
+  columns: any[]
+}
 
 function getStatusColor(status: string) {
   switch (status) {
@@ -86,6 +42,46 @@ function getStatusLabel(status: string) {
 }
 
 export function BoardsList() {
+  const [boards, setBoards] = useState<Board[]>([])
+  const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    async function fetchBoards() {
+      try {
+        const response = await fetch("/api/boards")
+        if (!response.ok) {
+          throw new Error("Failed to fetch boards")
+        }
+        const boardsData = await response.json()
+        // Convert lastModified strings back to Date objects
+        const boardsWithDates = boardsData.map((board: any) => ({
+          ...board,
+          lastModified: new Date(board.lastModified)
+        }))
+        setBoards(boardsWithDates)
+      } catch (err) {
+        setError(err instanceof Error ? err.message : "Failed to fetch boards")
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    fetchBoards()
+  }, [])
+
+  if (loading) {
+    return <div className="text-center text-muted-foreground">Loading boards...</div>
+  }
+
+  if (error) {
+    return <div className="text-center text-destructive">Error: {error}</div>
+  }
+
+  if (boards.length === 0) {
+    return <div className="text-center text-muted-foreground">No boards found. Create your first board!</div>
+  }
+
   return (
     <div className="space-y-2">
       {boards.map((board) => (

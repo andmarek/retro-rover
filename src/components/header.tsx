@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button"
 import { useSession, signOut } from "@/lib/auth-client"
+import Link from "next/link"
 
 export function Header() {
   const { data: session, isPending, error } = useSession();
@@ -30,12 +31,12 @@ export function Header() {
                 (
                   <div className="flex items-center gap-2">
                     <span className="text-sm font-medium">{session.user.name}</span>
-                    <span className="text-sm font-medium"><a href="/myBoards"> My Boards </a></span>
+                    <span className="text-sm font-medium"><Link href="/boards"> My Boards </Link></span>
 
                   </div>
                 )
                 :
-                (<a href="/sign-in">Login</a>)}
+                (<Link href="/sign-in">Login</Link>)}
             </Button>
             <Button size="sm">Demo</Button>
           </div>
