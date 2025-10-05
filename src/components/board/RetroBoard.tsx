@@ -424,7 +424,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   // Prepare columns data
   const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
   const columnTypes: ColumnType[] = ["went-well", "to-improve", "action-items"]
-  const accentColors = ["accent", "destructive", "primary"] as const
+  const accentColors = ["success", "destructive", "primary"] as const
   
   // Map columns from database to renderable column data
   const columnsToRender = sortedColumns.slice(0, 3).map((column, index) => ({

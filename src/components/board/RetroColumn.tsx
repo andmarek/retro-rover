@@ -17,7 +17,7 @@ type RetroColumnProps = {
   onAddCard: (columnType: ColumnType, content: string) => void
   onDeleteCard: (columnType: ColumnType, cardId: string) => void
   onVoteCard: (columnType: ColumnType, cardId: string) => void
-  accentColor: "primary" | "accent" | "destructive"
+  accentColor: "primary" | "accent" | "destructive" | "success"
 }
 
 function DraggableCard({ 
@@ -82,6 +82,7 @@ export function RetroColumn({
     primary: "border-primary/20 bg-primary/5",
     accent: "border-accent/20 bg-accent/5",
     destructive: "border-destructive/20 bg-destructive/5",
+    success: "border-green-500/20 bg-green-500/5",
   }
 
   return (
