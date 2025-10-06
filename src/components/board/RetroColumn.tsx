@@ -40,29 +40,41 @@ function DraggableCard({
     },
   })
 
-  const dragStyle = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-        opacity: isDragging ? 0.5 : 1,
-      }
-    : undefined
-
   return (
     <motion.div
       ref={setNodeRef} 
-      style={dragStyle} 
       {...listeners} 
       {...attributes}
-      layout
+      layout={!isDragging}
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ opacity: 1, y: 0, scale: 1 }}
+      animate={{ 
+        opacity: 1,
+        x: transform ? transform.x : 0,
+        y: transform ? transform.y : 0,
+        scale: isDragging ? 1.05 : 1,
+        rotate: isDragging ? 2 : 0,
+      }}
       exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
       transition={{ 
-        type: "spring",
-        stiffness: 500,
-        damping: 35,
-        mass: 0.5
+        opacity: { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
+        scale: { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
+        rotate: { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
+        x: isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
+        y: isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
+        layout: {
+          type: "spring",
+          stiffness: 400,
+          damping: 30
+        }
       }}
+      style={{
+        cursor: isDragging ? 'grabbing' : 'grab',
+        position: 'relative',
+        zIndex: isDragging ? 9999 : 1,
+        willChange: isDragging ? 'transform' : 'auto',
+        isolation: isDragging ? 'isolate' : 'auto',
+      }}
+      className={isDragging ? 'shadow-2xl' : ''}
     >
       <RetroCard card={card} onDelete={onDelete} onVote={onVote} />
     </motion.div>
@@ -81,7 +93,7 @@ export function RetroColumn({
 }: RetroColumnProps) {
   const [isAdding, setIsAdding] = useState(false)
 
-  const { setNodeRef } = useDroppable({
+  const { setNodeRef, isOver } = useDroppable({
     id: `column-${columnType}`,
     data: {
       columnType,
@@ -110,10 +122,18 @@ export function RetroColumn({
       </div>
 
       {/* Cards Container */}
-      <div ref={setNodeRef} className="flex flex-1 flex-col gap-3 rounded-xl border border-border bg-card/50 p-4 backdrop-blur-sm">
+      <div 
+        ref={setNodeRef} 
+        className={cn(
+          "flex flex-1 flex-col gap-3 rounded-xl border border-border bg-card/50 p-4 backdrop-blur-sm transition-all duration-200",
+          isOver && "bg-accent/20 border-accent/50 ring-2 ring-accent/30"
+        )}
+      >
         {cards.length === 0 && !isAdding && (
           <div className="flex flex-1 items-center justify-center py-12">
-            <p className="text-sm text-muted-foreground">No cards yet. Add one to get started!</p>
+            <p className="text-sm text-muted-foreground">
+              {isOver ? "Drop card here" : "No cards yet. Add one to get started!"}
+            </p>
           </div>
         )}
 
@@ -130,6 +150,18 @@ export function RetroColumn({
               />
             ))}
         </AnimatePresence>
+        
+        {/* Drop zone indicator */}
+        {isOver && cards.length > 0 && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 60 }}
+            exit={{ opacity: 0, height: 0 }}
+            className="rounded-lg border-2 border-dashed border-accent/50 bg-accent/10 flex items-center justify-center"
+          >
+            <p className="text-xs text-muted-foreground">Drop here</p>
+          </motion.div>
+        )}
 
         {isAdding && (
           <RetroInput
