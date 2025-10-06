@@ -6,6 +6,7 @@ import { RetroCard } from "./RetroCard"
 import { RetroInput } from "./RetroInput"
 import { cn } from "@/lib/utils"
 import { useDroppable, useDraggable } from "@dnd-kit/core"
+import { motion, AnimatePresence } from "framer-motion"
 
 export type ColumnType = "went-well" | "to-improve" | "action-items"
 
@@ -18,21 +19,18 @@ type RetroColumnProps = {
   onDeleteCard: (columnType: ColumnType, cardId: string) => void
   onVoteCard: (columnType: ColumnType, cardId: string) => void
   accentColor: "primary" | "accent" | "destructive" | "success"
-  lastAddedCardId?: string | null
 }
 
 function DraggableCard({ 
   card, 
   columnType,
   onDelete, 
-  onVote,
-  isNew
+  onVote
 }: { 
   card: RetroCardType
   columnType: ColumnType
   onDelete: () => void
   onVote: () => void
-  isNew?: boolean
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: `card-${card.id}`,
@@ -42,7 +40,7 @@ function DraggableCard({
     },
   })
 
-  const style = transform
+  const dragStyle = transform
     ? {
         transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
         opacity: isDragging ? 0.5 : 1,
@@ -50,15 +48,24 @@ function DraggableCard({
     : undefined
 
   return (
-    <div 
+    <motion.div
       ref={setNodeRef} 
-      style={style} 
+      style={dragStyle} 
       {...listeners} 
       {...attributes}
-      className={isNew ? "animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out" : ""}
+      layout
+      initial={{ opacity: 0, y: 20, scale: 0.95 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
+      transition={{ 
+        type: "spring",
+        stiffness: 500,
+        damping: 35,
+        mass: 0.5
+      }}
     >
       <RetroCard card={card} onDelete={onDelete} onVote={onVote} />
-    </div>
+    </motion.div>
   )
 }
 
@@ -71,7 +78,6 @@ export function RetroColumn({
   onDeleteCard,
   onVoteCard,
   accentColor,
-  lastAddedCardId,
 }: RetroColumnProps) {
   const [isAdding, setIsAdding] = useState(false)
 
@@ -111,18 +117,19 @@ export function RetroColumn({
           </div>
         )}
 
-        {cards
-          .sort((a, b) => b.votes - a.votes)
-          .map((card) => (
-            <DraggableCard
-              key={card.id}
-              card={card}
-              columnType={columnType}
-              onDelete={() => onDeleteCard(columnType, card.id)}
-              onVote={() => onVoteCard(columnType, card.id)}
-              isNew={card.id === lastAddedCardId}
-            />
-          ))}
+        <AnimatePresence mode="popLayout">
+          {cards
+            .sort((a, b) => b.votes - a.votes)
+            .map((card) => (
+              <DraggableCard
+                key={card.id}
+                card={card}
+                columnType={columnType}
+                onDelete={() => onDeleteCard(columnType, card.id)}
+                onVote={() => onVoteCard(columnType, card.id)}
+              />
+            ))}
+        </AnimatePresence>
 
         {isAdding && (
           <RetroInput

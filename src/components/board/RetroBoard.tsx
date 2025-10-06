@@ -34,7 +34,6 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const [boardData, setBoardData] = useState<BoardWithColumnsAndComments | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [lastAddedCardId, setLastAddedCardId] = useState<string | null>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -166,7 +165,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     // Generate a unique comment ID
     const commentId = crypto.randomUUID()
 
-    // Optimistically add the card to the state FIRST
+    // Optimistically add the card to the state
     setBoardData(prev => {
       if (!prev) return prev
       const updatedColumns = prev.columns.map(col => {
@@ -191,13 +190,6 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
       })
       return { ...prev, columns: updatedColumns }
     })
-    
-    // Set animation flag after the card is added to DOM
-    setTimeout(() => {
-      setLastAddedCardId(commentId)
-      // Clear the animation flag after animation completes
-      setTimeout(() => setLastAddedCardId(null), 400)
-    }, 10)
 
     try {
       const response = await fetch("/api/boards/comments", {
@@ -511,7 +503,6 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
                 onDeleteCard={deleteCard}
                 onVoteCard={voteCard}
                 accentColor={col.accentColor}
-                lastAddedCardId={lastAddedCardId}
               />
             ))}
           </div>
