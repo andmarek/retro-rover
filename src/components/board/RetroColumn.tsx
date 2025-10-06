@@ -18,18 +18,21 @@ type RetroColumnProps = {
   onDeleteCard: (columnType: ColumnType, cardId: string) => void
   onVoteCard: (columnType: ColumnType, cardId: string) => void
   accentColor: "primary" | "accent" | "destructive" | "success"
+  lastAddedCardId?: string | null
 }
 
 function DraggableCard({ 
   card, 
   columnType,
   onDelete, 
-  onVote 
+  onVote,
+  isNew
 }: { 
   card: RetroCardType
   columnType: ColumnType
   onDelete: () => void
   onVote: () => void
+  isNew?: boolean
 }) {
   const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
     id: `card-${card.id}`,
@@ -47,7 +50,13 @@ function DraggableCard({
     : undefined
 
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+    <div 
+      ref={setNodeRef} 
+      style={style} 
+      {...listeners} 
+      {...attributes}
+      className={isNew ? "animate-in fade-in slide-in-from-bottom-2 duration-300 ease-out" : ""}
+    >
       <RetroCard card={card} onDelete={onDelete} onVote={onVote} />
     </div>
   )
@@ -62,6 +71,7 @@ export function RetroColumn({
   onDeleteCard,
   onVoteCard,
   accentColor,
+  lastAddedCardId,
 }: RetroColumnProps) {
   const [isAdding, setIsAdding] = useState(false)
 
@@ -110,6 +120,7 @@ export function RetroColumn({
               columnType={columnType}
               onDelete={() => onDeleteCard(columnType, card.id)}
               onVote={() => onVoteCard(columnType, card.id)}
+              isNew={card.id === lastAddedCardId}
             />
           ))}
 
