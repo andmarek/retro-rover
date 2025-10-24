@@ -19,6 +19,7 @@ type RetroColumnProps = {
   onDeleteCard: (columnType: ColumnType, cardId: string) => void
   onVoteCard: (columnType: ColumnType, cardId: string) => void
   accentColor: "primary" | "accent" | "destructive" | "success"
+  sortByVotes: boolean
 }
 
 function DraggableCard({ 
@@ -90,8 +91,11 @@ export function RetroColumn({
   onDeleteCard,
   onVoteCard,
   accentColor,
+  sortByVotes,
 }: RetroColumnProps) {
   const [isAdding, setIsAdding] = useState(false)
+
+  const displayCards = sortByVotes ? [...cards].sort((a, b) => b.votes - a.votes) : cards
 
   const { setNodeRef, isOver } = useDroppable({
     id: `column-${columnType}`,
@@ -138,17 +142,15 @@ export function RetroColumn({
         )}
 
         <AnimatePresence mode="popLayout">
-          {cards
-            .sort((a, b) => b.votes - a.votes)
-            .map((card) => (
-              <DraggableCard
-                key={card.id}
-                card={card}
-                columnType={columnType}
-                onDelete={() => onDeleteCard(columnType, card.id)}
-                onVote={() => onVoteCard(columnType, card.id)}
-              />
-            ))}
+          {displayCards.map((card) => (
+            <DraggableCard
+              key={card.id}
+              card={card}
+              columnType={columnType}
+              onDelete={() => onDeleteCard(columnType, card.id)}
+              onVote={() => onVoteCard(columnType, card.id)}
+            />
+          ))}
         </AnimatePresence>
         
         {/* Drop zone indicator */}

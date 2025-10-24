@@ -4,19 +4,29 @@ import { useState, useEffect, useCallback } from "react"
 import { RetroColumn, ColumnType } from "./RetroColumn"
 import { RetroCard } from "./RetroCard"
 import { Button } from "@/components/ui/button"
-import { Download, Share2 } from "lucide-react"
+import { Download, Share2, ArrowUpDown, ThumbsUp, GripVertical } from "lucide-react"
 import { BoardWithColumnsAndComments } from "@/app/lib/postgres"
 import { webSocketManager } from "@/lib/websocket"
 import { DndContext, DragEndEvent, useSensors, useSensor, PointerSensor } from "@dnd-kit/core"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface RetroBoardProps {
   boardId: string
 }
 
+type SortMode = "votes" | "user"
+
 export function RetroBoard({ boardId }: RetroBoardProps) {
   const [boardData, setBoardData] = useState<BoardWithColumnsAndComments | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [sortMode, setSortMode] = useState<SortMode>("votes")
+  const [manualOrder, setManualOrder] = useState<Record<string, string[]>>({})
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -46,12 +56,31 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
 
       const data = await response.json()
       setBoardData(data)
+      
+      // Ensure manual order includes all current cards when in manual mode
+      if (sortMode === "user") {
+        setManualOrder(prev => {
+          const newOrder = { ...prev }
+          data.columns.forEach((column: any) => {
+            const existingOrder = prev[column.column_id] || []
+            const existingIds = new Set(existingOrder)
+            const allCardIds = column.comments.map((c: any) => c.comment_id)
+            
+            // Add any new cards that aren't in the manual order yet
+            const newCards = allCardIds.filter((id: string) => !existingIds.has(id))
+            if (newCards.length > 0 || !prev[column.column_id]) {
+              newOrder[column.column_id] = [...existingOrder, ...newCards]
+            }
+          })
+          return newOrder
+        })
+      }
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred")
     } finally {
       setLoading(false)
     }
-  }, [boardId])
+  }, [boardId, sortMode])
 
   useEffect(() => {
     fetchBoardData()
@@ -138,6 +167,19 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
       })
       return { ...prev, columns: updatedColumns }
     })
+
+    // Update manual order if in manual mode
+    if (sortMode === "user") {
+      setManualOrder(prev => {
+        const newOrder = { ...prev }
+        if (newOrder[column.column_id]) {
+          newOrder[column.column_id] = [...newOrder[column.column_id], commentId]
+        } else {
+          newOrder[column.column_id] = [...column.comments.map(c => c.comment_id), commentId]
+        }
+        return newOrder
+      })
+    }
 
     try {
       const response = await fetch("/api/boards/comments", {
@@ -333,6 +375,30 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
       return { ...prev, columns: updatedColumns }
     })
 
+    // Update manual order if in manual mode
+    if (sortMode === "user") {
+      setManualOrder((prev) => {
+        const newOrder = { ...prev }
+        
+        // Update source column order (remove card)
+        if (newOrder[sourceColumn.column_id]) {
+          newOrder[sourceColumn.column_id] = newOrder[sourceColumn.column_id].filter(
+            id => id !== draggedCardId
+          )
+        }
+        
+        // Update target column order (add card)
+        if (newOrder[targetColumn.column_id]) {
+          newOrder[targetColumn.column_id] = [...newOrder[targetColumn.column_id], draggedCardId]
+        } else {
+          const targetCards = targetColumn.comments.map(c => c.comment_id)
+          newOrder[targetColumn.column_id] = [...targetCards, draggedCardId]
+        }
+        
+        return newOrder
+      })
+    }
+
     try {
       const response = await fetch(`/api/boards/comments/move/${boardId}`, {
         method: "POST",
@@ -402,13 +468,38 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const accentColors = ["success", "destructive", "primary"] as const
   
   // Map columns from database to renderable column data
-  const columnsToRender = sortedColumns.slice(0, 3).map((column, index) => ({
-    title: column.column_name,
-    description: "", // Could add column descriptions to database schema in future
-    columnType: columnTypes[index],
-    cards: column.comments.map(convertToRetroCard),
-    accentColor: accentColors[index]
-  }))
+  const columnsToRender = sortedColumns.map((column, index) => {
+    const cards = column.comments.map(convertToRetroCard)
+    
+    // Sort cards based on sort mode
+    let sortedCards: RetroCard[]
+    if (sortMode === "votes") {
+      sortedCards = [...cards].sort((a, b) => b.votes - a.votes)
+    } else {
+      // In manual mode, use the manual order if available, otherwise use current order
+      const columnOrder = manualOrder[column.column_id]
+      if (columnOrder) {
+        const cardMap = new Map(cards.map(card => [card.id, card]))
+        sortedCards = columnOrder
+          .map(id => cardMap.get(id))
+          .filter((card): card is RetroCard => card !== undefined)
+        // Add any new cards that aren't in the manual order yet
+        const orderedIds = new Set(columnOrder)
+        const newCards = cards.filter(card => !orderedIds.has(card.id))
+        sortedCards.push(...newCards)
+      } else {
+        sortedCards = cards
+      }
+    }
+    
+    return {
+      title: column.column_name,
+      description: "", // Could add column descriptions to database schema in future
+      columnType: columnTypes[index],
+      cards: sortedCards,
+      accentColor: accentColors[index]
+    }
+  })
 
   return (
     <div className="min-h-screen pt-20 px-6 pb-6 md:pt-24 md:px-8 md:pb-8 lg:pt-28 lg:px-12 lg:pb-12">
@@ -425,6 +516,36 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
               </p>
             </div>
             <div className="flex gap-2">
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm">
+                    <ArrowUpDown className="mr-2 h-4 w-4" />
+                    Sort: {sortMode === "votes" ? "By Votes" : "Manual"}
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem onClick={() => setSortMode("votes")}>
+                    <ThumbsUp className="mr-2 h-4 w-4" />
+                    Sort by Votes
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={() => {
+                    // Initialize manual order with current card positions when switching to manual mode
+                    if (sortMode === "votes" && boardData) {
+                      const newManualOrder: Record<string, string[]> = {}
+                      boardData.columns.forEach(column => {
+                        const cards = column.comments.map(convertToRetroCard)
+                        const sortedCards = [...cards].sort((a, b) => b.votes - a.votes)
+                        newManualOrder[column.column_id] = sortedCards.map(card => card.id)
+                      })
+                      setManualOrder(newManualOrder)
+                    }
+                    setSortMode("user")
+                  }}>
+                    <GripVertical className="mr-2 h-4 w-4" />
+                    Manual Sorting
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
               <Button variant="outline" size="sm">
                 <Share2 className="mr-2 h-4 w-4" />
                 Share
@@ -439,7 +560,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
 
         {/* Columns Grid */}
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-          <div className="grid gap-6 md:grid-cols-3">
+          <div className={`grid gap-6 ${sortedColumns.length === 2 ? 'md:grid-cols-2' : sortedColumns.length === 1 ? 'md:grid-cols-1' : 'md:grid-cols-3'}`}>
             {columnsToRender.map((col) => (
               <RetroColumn
                 key={col.columnType}
@@ -451,6 +572,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
                 onDeleteCard={deleteCard}
                 onVoteCard={voteCard}
                 accentColor={col.accentColor}
+                sortByVotes={sortMode === "votes"}
               />
             ))}
           </div>
