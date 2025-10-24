@@ -9,23 +9,6 @@ import { BoardWithColumnsAndComments } from "@/app/lib/postgres"
 import { webSocketManager } from "@/lib/websocket"
 import { DndContext, DragEndEvent, useSensors, useSensor, PointerSensor } from "@dnd-kit/core"
 
-interface RetroCardData extends RetroCard {
-  comment_id: string
-  comment_text: string
-  comment_likes: number
-  created_at: Date
-  updated_at: Date
-}
-
-interface RetroColumnData {
-  board_id: string
-  column_id: number
-  column_name: string
-  column_order: number
-  created_at: Date
-  comments: RetroCardData[]
-}
-
 interface RetroBoardProps {
   boardId: string
 }
@@ -49,41 +32,6 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     content: dbCard.comment_text,
     votes: dbCard.comment_likes,
   })
-
-  // Convert database columns to our format with proper column types
-  const getColumnType = (columnName: string, columnId: number): ColumnType => {
-    const lowerName = columnName.toLowerCase()
-    if (lowerName.includes('well') || lowerName.includes('good') || lowerName.includes('positive') || columnId === 0) {
-      return "went-well"
-    }
-    if (lowerName.includes('improve') || lowerName.includes('bad') || lowerName.includes('problem') || columnId === 1) {
-      return "to-improve"
-    }
-    return "action-items"
-  }
-
-  const getColumnConfig = (columnType: ColumnType, originalName: string) => {
-    switch (columnType) {
-      case "went-well":
-        return {
-          title: "What Went Well",
-          description: "Celebrate successes and positive outcomes",
-          accentColor: "accent" as const
-        }
-      case "to-improve":
-        return {
-          title: "To Improve", 
-          description: "Identify challenges and areas for growth",
-          accentColor: "destructive" as const
-        }
-      case "action-items":
-        return {
-          title: "Action Items",
-          description: "Concrete steps for the next sprint", 
-          accentColor: "primary" as const
-        }
-    }
-  }
 
   const fetchBoardData = useCallback(async () => {
     try {
@@ -463,7 +411,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   }))
 
   return (
-    <div className="min-h-screen p-6 md:p-8 lg:p-12">
+    <div className="min-h-screen pt-20 px-6 pb-6 md:pt-24 md:px-8 md:pb-8 lg:pt-28 lg:px-12 lg:pb-12">
       <div className="mx-auto max-w-7xl">
         {/* Header */}
         <header className="mb-8 md:mb-12">
@@ -491,7 +439,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
 
         {/* Columns Grid */}
         <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
-          <div className={`grid gap-6 md:grid-cols-${Math.min(sortedColumns.length, 3)}`}>
+          <div className="grid gap-6 md:grid-cols-3">
             {columnsToRender.map((col) => (
               <RetroColumn
                 key={col.columnType}
