@@ -6,7 +6,7 @@ import { RetroCard } from "./RetroCard"
 import { RetroInput } from "./RetroInput"
 import { cn } from "@/lib/utils"
 import { useDroppable, useDraggable } from "@dnd-kit/core"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 
 export type ColumnType = "went-well" | "to-improve" | "action-items"
 
@@ -42,43 +42,20 @@ function DraggableCard({
   })
 
   return (
-    <motion.div
+    <div
       ref={setNodeRef} 
       {...listeners} 
       {...attributes}
-      layout={!isDragging}
-      initial={{ opacity: 0, y: 20, scale: 0.95 }}
-      animate={{ 
-        opacity: 1,
-        x: transform ? transform.x : 0,
-        y: transform ? transform.y : 0,
-        scale: isDragging ? 1.05 : 1,
-        rotate: isDragging ? 2 : 0,
-      }}
-      exit={{ opacity: 0, scale: 0.95, transition: { duration: 0.2 } }}
-      transition={{ 
-        opacity: { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
-        scale: { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
-        rotate: { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
-        x: isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
-        y: isDragging ? { type: "tween", duration: 0 } : { type: "spring", stiffness: 500, damping: 35, mass: 0.5 },
-        layout: {
-          type: "spring",
-          stiffness: 400,
-          damping: 30
-        }
-      }}
       style={{
         cursor: isDragging ? 'grabbing' : 'grab',
         position: 'relative',
         zIndex: isDragging ? 9999 : 1,
-        willChange: isDragging ? 'transform' : 'auto',
-        isolation: isDragging ? 'isolate' : 'auto',
+        transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
       }}
       className={isDragging ? 'shadow-2xl' : ''}
     >
       <RetroCard card={card} onDelete={onDelete} onVote={onVote} />
-    </motion.div>
+    </div>
   )
 }
 
@@ -129,7 +106,7 @@ export function RetroColumn({
       <div 
         ref={setNodeRef} 
         className={cn(
-          "flex flex-1 flex-col gap-3 rounded-xl border border-border bg-card/50 p-4 backdrop-blur-sm transition-all duration-200",
+          "flex flex-1 flex-col gap-3 rounded-xl border border-border bg-card/50 p-4 transition-colors duration-200",
           isOver && "bg-accent/20 border-accent/50 ring-2 ring-accent/30"
         )}
       >
@@ -141,17 +118,15 @@ export function RetroColumn({
           </div>
         )}
 
-        <AnimatePresence mode="popLayout">
-          {displayCards.map((card) => (
-            <DraggableCard
-              key={card.id}
-              card={card}
-              columnType={columnType}
-              onDelete={() => onDeleteCard(columnType, card.id)}
-              onVote={() => onVoteCard(columnType, card.id)}
-            />
-          ))}
-        </AnimatePresence>
+        {displayCards.map((card) => (
+          <DraggableCard
+            key={card.id}
+            card={card}
+            columnType={columnType}
+            onDelete={() => onDeleteCard(columnType, card.id)}
+            onVote={() => onVoteCard(columnType, card.id)}
+          />
+        ))}
         
         {/* Drop zone indicator */}
         {isOver && cards.length > 0 && (
