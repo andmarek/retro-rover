@@ -111,15 +111,14 @@ export default function Board({ boardId }: BoardProps) {
 
   const handleLikeCard = async (columnId: number, cardId: string) => {
     try {
-      const response = await fetch(`/api/boards/comments/${boardId}`, {
+      const response = await fetch(`/api/boards/comments/${cardId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          commentId: cardId,
+          boardId,
           columnId,
-          action: "like",
         }),
       });
 
@@ -133,15 +132,14 @@ export default function Board({ boardId }: BoardProps) {
 
   const handleUnlikeCard = async (columnId: number, cardId: string) => {
     try {
-      const response = await fetch(`/api/boards/comments/${boardId}`, {
-        method: "POST",
+      const response = await fetch(`/api/boards/comments/${cardId}`, {
+        method: "DELETE",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          commentId: cardId,
+          boardId,
           columnId,
-          action: "unlike",
         }),
       });
 

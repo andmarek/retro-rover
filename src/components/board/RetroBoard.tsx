@@ -285,15 +285,14 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     if (!column) return
 
     try {
-      const response = await fetch(`/api/boards/comments/${boardId}`, {
+      const response = await fetch(`/api/boards/comments/${cardId}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          commentId: cardId,
+          boardId,
           columnId: column.column_id,
-          action: "like",
         }),
       })
 
