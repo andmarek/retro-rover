@@ -5,7 +5,9 @@ import type { RetroCard as RetroCardType } from "./RetroCard"
 import { RetroCard } from "./RetroCard"
 import { RetroInput } from "./RetroInput"
 import { cn } from "@/lib/utils"
-import { useDroppable, useDraggable } from "@dnd-kit/core"
+import { useDroppable } from "@dnd-kit/core"
+import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable"
+import { CSS } from "@dnd-kit/utilities"
 import { motion } from "framer-motion"
 
 export type ColumnType = "went-well" | "to-improve" | "action-items"
@@ -22,7 +24,7 @@ type RetroColumnProps = {
   sortByVotes: boolean
 }
 
-function DraggableCard({ 
+function SortableCard({ 
   card, 
   columnType,
   onDelete, 
@@ -33,7 +35,7 @@ function DraggableCard({
   onDelete: () => void
   onVote: () => void
 }) {
-  const { attributes, listeners, setNodeRef, transform, isDragging } = useDraggable({
+  const { attributes, listeners, setNodeRef, transform, transition, isDragging } = useSortable({
     id: `card-${card.id}`,
     data: {
       cardId: card.id,
@@ -41,18 +43,19 @@ function DraggableCard({
     },
   })
 
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition,
+    cursor: isDragging ? 'grabbing' : 'grab',
+    opacity: isDragging ? 0.4 : 1,
+  }
+
   return (
     <div
       ref={setNodeRef} 
       {...listeners} 
       {...attributes}
-      style={{
-        cursor: isDragging ? 'grabbing' : 'grab',
-        position: 'relative',
-        zIndex: isDragging ? 9999 : 1,
-        transform: transform ? `translate(${transform.x}px, ${transform.y}px)` : undefined,
-      }}
-      className={isDragging ? 'shadow-2xl' : ''}
+      style={style}
     >
       <RetroCard card={card} onDelete={onDelete} onVote={onVote} />
     </div>
@@ -118,15 +121,20 @@ export function RetroColumn({
           </div>
         )}
 
-        {displayCards.map((card) => (
-          <DraggableCard
-            key={card.id}
-            card={card}
-            columnType={columnType}
-            onDelete={() => onDeleteCard(columnType, card.id)}
-            onVote={() => onVoteCard(columnType, card.id)}
-          />
-        ))}
+        <SortableContext 
+          items={displayCards.map(card => `card-${card.id}`)} 
+          strategy={verticalListSortingStrategy}
+        >
+          {displayCards.map((card) => (
+            <SortableCard
+              key={card.id}
+              card={card}
+              columnType={columnType}
+              onDelete={() => onDeleteCard(columnType, card.id)}
+              onVote={() => onVoteCard(columnType, card.id)}
+            />
+          ))}
+        </SortableContext>
         
         {/* Drop zone indicator */}
         {isOver && cards.length > 0 && (

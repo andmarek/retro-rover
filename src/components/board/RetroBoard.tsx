@@ -7,7 +7,8 @@ import { Button } from "@/components/ui/button"
 import { Download, Share2, ArrowUpDown, ThumbsUp, GripVertical } from "lucide-react"
 import { BoardWithColumnsAndComments } from "@/app/lib/postgres"
 import { webSocketManager } from "@/lib/websocket"
-import { DndContext, DragEndEvent, useSensors, useSensor, PointerSensor } from "@dnd-kit/core"
+import { DndContext, DragEndEvent, DragStartEvent, DragOverlay, useSensors, useSensor, PointerSensor, pointerWithin, rectIntersection, CollisionDetection } from "@dnd-kit/core"
+import { arrayMove } from "@dnd-kit/sortable"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -27,6 +28,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const [error, setError] = useState<string | null>(null)
   const [sortMode, setSortMode] = useState<SortMode>("votes")
   const [manualOrder, setManualOrder] = useState<Record<string, string[]>>({})
+  const [activeCard, setActiveCard] = useState<RetroCard | null>(null)
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -35,6 +37,18 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
       },
     })
   )
+
+  const customCollisionDetection: CollisionDetection = (args) => {
+    const pointerCollisions = pointerWithin(args)
+    
+    if (pointerCollisions.length > 0) {
+      const cardCollision = pointerCollisions.find(c => c.id.toString().startsWith('card-'))
+      if (cardCollision) return [cardCollision]
+      return [pointerCollisions[0]]
+    }
+    
+    return rectIntersection(args)
+  }
 
   // Convert database cards to RetroCard format
   const convertToRetroCard = (dbCard: any): RetroCard => ({
@@ -321,16 +335,65 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     }
   }
 
+  const handleDragStart = (event: DragStartEvent) => {
+    const { active } = event
+    if (!active.data.current || !boardData) return
+    
+    const cardId = active.data.current.cardId as string
+    const columnType = active.data.current.columnType as ColumnType
+    const columnIndex = columnType === "went-well" ? 0 : columnType === "to-improve" ? 1 : 2
+    const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
+    const column = sortedColumns[columnIndex]
+    
+    if (column) {
+      const card = column.comments.find(c => c.comment_id === cardId)
+      if (card) {
+        setActiveCard(convertToRetroCard(card))
+      }
+    }
+  }
+
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event
+    setActiveCard(null)
 
     if (!over || !active.data.current || !boardData) return
 
     const sourceColumnType = active.data.current.columnType as ColumnType
-    const targetColumnType = over.data.current?.columnType as ColumnType
     const draggedCardId = active.data.current.cardId as string
+    
+    const overId = over.id.toString()
+    const isOverCard = overId.startsWith('card-')
+    const targetColumnType = over.data.current?.columnType as ColumnType
+    
+    if (!targetColumnType) return
 
-    if (sourceColumnType === targetColumnType) return
+    if (sourceColumnType === targetColumnType) {
+      if (sortMode !== "user") return
+      if (!isOverCard || active.id === over.id) return
+      
+      const overCardId = over.data.current?.cardId as string
+      const sourceColumnIndex = sourceColumnType === "went-well" ? 0 : sourceColumnType === "to-improve" ? 1 : 2
+      const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
+      const sourceColumn = sortedColumns[sourceColumnIndex]
+      
+      if (!sourceColumn) return
+      
+      const currentOrder = manualOrder[sourceColumn.column_id] || sourceColumn.comments.map(c => c.comment_id)
+      const oldIndex = currentOrder.indexOf(draggedCardId)
+      const newIndex = currentOrder.indexOf(overCardId)
+      
+      if (oldIndex === -1 || newIndex === -1 || oldIndex === newIndex) return
+      
+      const newOrder = arrayMove(currentOrder, oldIndex, newIndex)
+      
+      setManualOrder(prev => ({
+        ...prev,
+        [sourceColumn.column_id]: newOrder
+      }))
+      
+      return
+    }
 
     // Get column indices
     const sourceColumnIndex = sourceColumnType === "went-well" ? 0 : sourceColumnType === "to-improve" ? 1 : 2
@@ -558,7 +621,12 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
         </header>
 
         {/* Columns Grid */}
-        <DndContext sensors={sensors} onDragEnd={handleDragEnd}>
+        <DndContext 
+          sensors={sensors} 
+          collisionDetection={customCollisionDetection} 
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
+        >
           <div className={`grid gap-6 ${sortedColumns.length === 2 ? 'md:grid-cols-2' : sortedColumns.length === 1 ? 'md:grid-cols-1' : 'md:grid-cols-3'}`}>
             {columnsToRender.map((col) => (
               <RetroColumn
@@ -575,6 +643,13 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
               />
             ))}
           </div>
+          <DragOverlay dropAnimation={{ duration: 200, easing: 'ease' }}>
+            {activeCard ? (
+              <div className="shadow-2xl rotate-3 opacity-95">
+                <RetroCard card={activeCard} onDelete={() => {}} onVote={() => {}} />
+              </div>
+            ) : null}
+          </DragOverlay>
         </DndContext>
       </div>
     </div>

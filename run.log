@@ -1,0 +1,1059 @@
+
+> expf@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.135:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1126ms
+ ✓ Compiled /middleware in 118ms (114 modules)
+ ○ Compiling /boards ...
+ ⨯ ./src/components/ui/toaster.tsx:3:1
+Module not found: Can't resolve '@/components/hooks/use-toast'
+  1 | "use client"
+  2 |
+> 3 | import { useToast } from "@/components/hooks/use-toast"
+    | ^
+  4 | import {
+  5 |   Toast,
+  6 |   ToastClose,
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/components/ui/toaster.tsx:3:1
+Module not found: Can't resolve '@/components/hooks/use-toast'
+  1 | "use client"
+  2 |
+> 3 | import { useToast } from "@/components/hooks/use-toast"
+    | ^
+  4 | import {
+  5 |   Toast,
+  6 |   ToastClose,
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/components/ui/toaster.tsx:3:1
+Module not found: Can't resolve '@/components/hooks/use-toast'
+  1 | "use client"
+  2 |
+> 3 | import { useToast } from "@/components/hooks/use-toast"
+    | ^
+  4 | import {
+  5 |   Toast,
+  6 |   ToastClose,
+
+https://nextjs.org/docs/messages/module-not-found
+ GET /boards 500 in 242ms
+ ⨯ ./src/components/ui/toaster.tsx:3:1
+Module not found: Can't resolve '@/components/hooks/use-toast'
+  1 | "use client"
+  2 |
+> 3 | import { useToast } from "@/components/hooks/use-toast"
+    | ^
+  4 | import {
+  5 |   Toast,
+  6 |   ToastClose,
+
+https://nextjs.org/docs/messages/module-not-found
+
+> expf@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.135:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1230ms
+ ✓ Compiled /middleware in 122ms (114 modules)
+ ○ Compiling /boards ...
+ ⨯ ./src/components/ui/toaster.tsx:3:1
+Module not found: Can't resolve '@/components/hooks/use-toast'
+  1 | "use client"
+  2 |
+> 3 | import { useToast } from "@/components/hooks/use-toast"
+    | ^
+  4 | import {
+  5 |   Toast,
+  6 |   ToastClose,
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/components/ui/toaster.tsx:3:1
+Module not found: Can't resolve '@/components/hooks/use-toast'
+  1 | "use client"
+  2 |
+> 3 | import { useToast } from "@/components/hooks/use-toast"
+    | ^
+  4 | import {
+  5 |   Toast,
+  6 |   ToastClose,
+
+https://nextjs.org/docs/messages/module-not-found
+ ⨯ ./src/components/ui/toaster.tsx:3:1
+Module not found: Can't resolve '@/components/hooks/use-toast'
+  1 | "use client"
+  2 |
+> 3 | import { useToast } from "@/components/hooks/use-toast"
+    | ^
+  4 | import {
+  5 |   Toast,
+  6 |   ToastClose,
+
+https://nextjs.org/docs/messages/module-not-found
+ GET /boards 500 in 262ms
+ ✓ Compiled /_error in 460ms (1251 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /boards 200 in 342ms
+ ○ Compiling /api/boards ...
+ ✓ Compiled /api/boards in 832ms (1731 modules)
+ GET /api/boards 200 in 1580ms
+ GET /boards 200 in 193ms
+ GET /api/boards 200 in 483ms
+ ○ Compiling /boards/[slug] ...
+ ✓ Compiled /boards/[slug] in 562ms (1762 modules)
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 1003ms
+ ✓ Compiled /api/boards/[slug] in 272ms (1765 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 762ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 57ms
+ GET /api/boards 200 in 590ms
+ GET /api/boards 200 in 88ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 37ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 57ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 53ms
+ GET /api/boards 200 in 492ms
+ GET /api/boards 200 in 79ms
+ GET /boards/5d85e501-c760-4ead-9a10-92e84bfddd69 200 in 34ms
+Fetching board data for: 5d85e501-c760-4ead-9a10-92e84bfddd69
+Board data retrieved: { boardId: '5d85e501-c760-4ead-9a10-92e84bfddd69', columnsCount: 3 }
+ GET /api/boards/5d85e501-c760-4ead-9a10-92e84bfddd69 200 in 58ms
+Fetching board data for: 5d85e501-c760-4ead-9a10-92e84bfddd69
+Board data retrieved: { boardId: '5d85e501-c760-4ead-9a10-92e84bfddd69', columnsCount: 3 }
+ GET /api/boards/5d85e501-c760-4ead-9a10-92e84bfddd69 200 in 54ms
+ ✓ Compiled /api/boards/comments in 185ms (1762 modules)
+Error adding comment: error: null value in column "comment_id" of relation "comments" violates not-null constraint
+    at async query (src/app/lib/postgres.ts:52:20)
+    at async addComment (src/app/lib/postgres.ts:159:3)
+    at async POST (src/app/api/boards/comments/route.ts:30:5)
+  50 |   const client = await getClient();
+  51 |   try {
+> 52 |     const result = await client.query(text, params);
+     |                    ^
+  53 |     return result;
+  54 |   } finally {
+  55 |     client.release(); {
+  length: 317,
+  severity: 'ERROR',
+  code: '23502',
+  detail: 'Failing row contains (null, 5d85e501-c760-4ead-9a10-92e84bfddd69, 1, f, 0, 2025-10-05 17:15:05.372404+00, 2025-10-05 17:15:05.372404+00).',
+  hint: undefined,
+  position: undefined,
+  internalPosition: undefined,
+  internalQuery: undefined,
+  where: undefined,
+  schema: 'public',
+  table: 'comments',
+  column: 'comment_id',
+  dataType: undefined,
+  constraint: undefined,
+  file: 'execMain.c',
+  line: '1981',
+  routine: 'ExecConstraints'
+}
+ POST /api/boards/comments 500 in 420ms
+ GET /api/boards 200 in 604ms
+ GET /api/boards 200 in 86ms
+ ⨯ ./src/app/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./src/app/globals.css
+SyntaxError: Unexpected token, expected "," (147:2)
+Import trace for requested module:
+./src/app/globals.css.webpack[javascript/auto]!=!./node_modules/next/dist/build/webpack/loaders/css-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[2]!./node_modules/next/dist/build/webpack/loaders/postcss-loader/src/index.js??ruleSet[1].rules[14].oneOf[10].use[3]!./src/app/globals.css
+./src/app/globals.css
+ GET /boards 500 in 30ms
+ GET /boards 500 in 15ms
+ GET /boards 500 in 25ms
+ GET /boards 500 in 22ms
+ GET /boards 500 in 23ms
+
+> expf@0.1.0 dev
+> next dev
+
+   ▲ Next.js 15.5.4
+   - Local:        http://localhost:3000
+   - Network:      http://192.168.0.135:3000
+   - Environments: .env
+
+ ✓ Starting...
+ ✓ Ready in 1206ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled /middleware in 109ms (114 modules)
+ ○ Compiling /boards ...
+ ✓ Compiled /boards in 1492ms (907 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /boards 200 in 1840ms
+ ✓ Compiled in 636ms (380 modules)
+ GET /boards 200 in 71ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /boards 200 in 3ms
+ GET /boards 200 in 32ms
+ ○ Compiling /api/boards ...
+ ✓ Compiled /api/boards in 586ms (1387 modules)
+ GET /api/boards 200 in 1304ms
+ ✓ Compiled /boards/[slug] in 414ms (1418 modules)
+ GET /boards/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 831ms
+ ✓ Compiled /api/boards/[slug] in 149ms (1421 modules)
+Fetching board data for: 188ca2db-dce7-4521-8cbd-eb8e5b622163
+Board data retrieved: { boardId: '188ca2db-dce7-4521-8cbd-eb8e5b622163', columnsCount: 3 }
+ GET /api/boards/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 621ms
+Fetching board data for: 188ca2db-dce7-4521-8cbd-eb8e5b622163
+Board data retrieved: { boardId: '188ca2db-dce7-4521-8cbd-eb8e5b622163', columnsCount: 3 }
+ GET /api/boards/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 56ms
+ GET /api/boards 200 in 604ms
+ GET /api/boards 200 in 93ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 74ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 163ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 54ms
+ ✓ Compiled /api/boards/[slug] in 683ms (939 modules)
+ ✓ Compiled in 0ms (566 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 261ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 503ms
+ GET /boards 200 in 178ms
+ ○ Compiling /boards/new ...
+ ✓ Compiled /boards/new in 640ms (974 modules)
+ GET /boards/new 200 in 760ms
+ ✓ Compiled /api/boards in 390ms (1063 modules)
+ POST /api/boards 201 in 1238ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 57ms
+ ✓ Compiled /api/boards/[slug] in 113ms (1066 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 305ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 54ms
+ ✓ Compiled in 596ms (1484 modules)
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 66ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 65ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 122ms
+ ✓ Compiled /api/boards/[slug] in 599ms (988 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 309ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 310ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 488ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 529ms
+ ✓ Compiled in 277ms (1010 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 110ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 111ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 179ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 161ms
+ ✓ Compiled in 647ms (1010 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 368ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 370ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 477ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 512ms
+ ✓ Compiled in 402ms (1010 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 351ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 351ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 487ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 489ms
+ ✓ Compiled /api/boards/[slug] in 754ms (988 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 336ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 336ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 653ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 653ms
+ ✓ Compiled in 364ms (1010 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 412ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 415ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 545ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 552ms
+ ✓ Compiled in 411ms (1010 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 1ms (592 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 363ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 363ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 524ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 468ms
+ ✓ Compiled in 652ms (1010 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 1ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 352ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 349ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 488ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 491ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 169ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 168ms
+ ✓ Compiled /api/boards/comments in 332ms (1012 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 81ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 82ms
+ POST /api/boards/comments 200 in 544ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 60ms
+ POST /api/boards/comments 200 in 38ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 61ms
+ POST /api/boards/comments 200 in 44ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 60ms
+ POST /api/boards/comments 200 in 45ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 60ms
+ POST /api/boards/comments 200 in 171ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 91ms
+ ✓ Compiled /api/boards/[slug] in 780ms (988 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 304ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 305ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 633ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 623ms
+ ✓ Compiled in 338ms (1010 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 365ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 367ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 491ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 503ms
+ ✓ Compiled in 364ms (1010 modules)
+ ✓ Compiled in 1ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+ ✓ Compiled in 0ms (592 modules)
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 349ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 349ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 541ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 499ms
+ ✓ Compiled /api/boards/comments in 172ms (594 modules)
+ POST /api/boards/comments 200 in 341ms
+ POST /api/boards/comments 200 in 40ms
+ POST /api/boards/comments 200 in 36ms
+ POST /api/boards/comments 200 in 42ms
+ POST /api/boards/comments 200 in 45ms
+ POST /api/boards/comments 200 in 38ms
+ ✓ Compiled in 819ms (1088 modules)
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 501ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 505ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 37ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 33ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 162ms
+ ✓ Compiled /api/boards/[slug] in 194ms (592 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 458ms
+ ✓ Compiled /api/boards/comments/[slug] in 286ms (998 modules)
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 219ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 840ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 36ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 29ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 35ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 29ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 32ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 29ms
+ ✓ Compiled /api/boards/comments in 261ms (582 modules)
+ DELETE /api/boards/comments 200 in 602ms
+ DELETE /api/boards/comments 200 in 52ms
+ DELETE /api/boards/comments 200 in 44ms
+ DELETE /api/boards/comments 200 in 44ms
+ DELETE /api/boards/comments 200 in 41ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 160ms
+ ✓ Compiled /api/boards/[slug] in 134ms (596 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 386ms
+ DELETE /api/boards/comments 200 in 45ms
+ DELETE /api/boards/comments 200 in 44ms
+ ✓ Compiled /api/boards/[slug] in 812ms (988 modules)
+ ✓ Compiled in 1ms (592 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 395ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 397ms
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 761ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 686ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 160ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 67ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 60ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 64ms
+ GET /boards 200 in 99ms
+ ○ Compiling /api/boards ...
+ ✓ Compiled /api/boards in 691ms (1066 modules)
+ GET /api/boards 200 in 1388ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 59ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 166ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 56ms
+ GET /api/boards 200 in 95ms
+ GET /api/boards 200 in 93ms
+ GET /boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 16ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 56ms
+Fetching board data for: 47b0e527-6881-47d3-a004-1e209b57ab66
+Board data retrieved: { boardId: '47b0e527-6881-47d3-a004-1e209b57ab66', columnsCount: 3 }
+ GET /api/boards/47b0e527-6881-47d3-a004-1e209b57ab66 200 in 53ms
+ GET /api/boards 200 in 117ms
+ GET /api/boards 200 in 108ms
+ GET /boards/42904572-cfcb-490c-a86d-f795b54c8000 200 in 27ms
+Fetching board data for: 42904572-cfcb-490c-a86d-f795b54c8000
+Board data retrieved: { boardId: '42904572-cfcb-490c-a86d-f795b54c8000', columnsCount: 3 }
+ GET /api/boards/42904572-cfcb-490c-a86d-f795b54c8000 200 in 86ms
+Fetching board data for: 42904572-cfcb-490c-a86d-f795b54c8000
+Board data retrieved: { boardId: '42904572-cfcb-490c-a86d-f795b54c8000', columnsCount: 3 }
+ GET /api/boards/42904572-cfcb-490c-a86d-f795b54c8000 200 in 65ms
+ GET /api/boards 200 in 114ms
+ GET /api/boards 200 in 94ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 32ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 182ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 55ms
+ ✓ Compiled /api/boards/comments in 224ms (594 modules)
+ POST /api/boards/comments 200 in 444ms
+ POST /api/boards/comments 200 in 178ms
+ DELETE /api/boards/comments 200 in 40ms
+ DELETE /api/boards/comments 200 in 41ms
+ ✓ Compiled /api/boards/comments/[slug] in 129ms (596 modules)
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 313ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 46ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 38ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 38ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 53ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 31ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 34ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 36ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 38ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 34ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 38ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 32ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 31ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 33ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 31ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 36ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 47ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 32ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 35ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 34ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 31ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 45ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 32ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 32ms
+ ✓ Compiled /api/boards in 127ms (1070 modules)
+ GET /api/boards 200 in 825ms
+ GET /api/boards 200 in 118ms
+ GET /boards/new 200 in 84ms
+ GET /api/boards 200 in 574ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 154ms
+ GET /api/boards 200 in 155ms
+ GET /boards 200 in 87ms
+ GET /api/boards 200 in 114ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 56ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 56ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 188ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 55ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 59ms
+ ✓ Compiled in 2.2s (418 modules)
+ ✓ Compiled in 328ms (418 modules)
+ GET /boards/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 89ms
+Fetching board data for: 188ca2db-dce7-4521-8cbd-eb8e5b622163
+Board data retrieved: { boardId: '188ca2db-dce7-4521-8cbd-eb8e5b622163', columnsCount: 3 }
+ GET /api/boards/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 172ms
+ POST /api/boards/comments 200 in 49ms
+ POST /api/boards/comments 200 in 42ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 147ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 36ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 40ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 40ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 45ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 40ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 41ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 31ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 33ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 31ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 36ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 29ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 31ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 29ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 33ms
+ POST /api/boards/comments/188ca2db-dce7-4521-8cbd-eb8e5b622163 200 in 43ms
+ ○ Compiling / ...
+ ✓ Compiled / in 744ms (1045 modules)
+ GET / 200 in 1046ms
+ ✓ Compiled /api/auth/[...all] in 341ms (1521 modules)
+ GET /api/auth/get-session 200 in 1371ms
+ ✓ Compiled /sign-in in 262ms (1528 modules)
+ GET /sign-in 200 in 328ms
+ GET /boards 200 in 33ms
+ ✓ Compiled /api/boards in 131ms (1128 modules)
+ GET /api/boards 200 in 763ms
+ GET /api/boards 200 in 85ms
+ GET /boards 200 in 51ms
+ GET /api/boards 200 in 80ms
+ GET /api/boards 200 in 83ms
+ ✓ Compiled in 521ms (1063 modules)
+ GET /boards 200 in 120ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 50ms
+ ✓ Compiled /api/boards/[slug] in 182ms (639 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 481ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 60ms
+ ✓ Compiled /_not-found in 261ms (1076 modules)
+ GET /myBoards 404 in 323ms
+ GET /myBoards 404 in 95ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 73ms
+ ✓ Compiled /api/boards/[slug] in 410ms (1061 modules)
+ ✓ Compiled in 0ms (638 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 317ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 577ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 57ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 454ms (1083 modules)
+ ⨯ ReferenceError: Header is not defined
+    at BoardPage (src/app/boards/[slug]/page.tsx:16:8)
+  14 |   return (
+  15 |     <>
+> 16 |       <Header />
+     |        ^
+  17 |       <RetroBoard boardId={slug} />
+  18 |     </>
+  19 |   ); {
+  digest: '3792264056'
+}
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 172ms
+ ⨯ ReferenceError: Header is not defined
+    at BoardPage (src/app/boards/[slug]/page.tsx:16:8)
+  14 |   return (
+  15 |     <>
+> 16 |       <Header />
+     |        ^
+  17 |       <RetroBoard boardId={slug} />
+  18 |     </>
+  19 |   ); {
+  digest: '3792264056'
+}
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 53ms
+ ✓ Compiled in 501ms (1083 modules)
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 136ms
+ ○ Compiling /api/auth/[...all] ...
+ ✓ Compiled /api/auth/[...all] in 840ms (1107 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1458ms
+ GET /api/auth/get-session 200 in 1577ms
+ GET /boards 200 in 69ms
+ ✓ Compiled /api/boards in 475ms (1126 modules)
+ GET /api/boards 200 in 1092ms
+ GET /api/boards 200 in 93ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 56ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 158ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 59ms
+ GET /boards 200 in 46ms
+ GET /api/boards 200 in 91ms
+ GET /api/boards 200 in 88ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 24ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 56ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 53ms
+ ✓ Compiled in 394ms (445 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 49ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 182ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 200ms
+ GET /api/auth/get-session 200 in 275ms
+ ✓ Compiled /api/boards/comments in 332ms (1109 modules)
+ POST /api/boards/comments 200 in 500ms
+ POST /api/boards/comments 200 in 47ms
+ ✓ Compiled /api/boards/[slug] in 907ms (1061 modules)
+ ✓ Compiled in 0ms (638 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 342ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 647ms
+ ✓ Compiled in 398ms (1089 modules)
+ ✓ Compiled in 0ms (641 modules)
+ ✓ Compiled in 0ms (641 modules)
+ ✓ Compiled in 0ms (641 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 456ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 648ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 169ms
+ ○ Compiling /api/auth/[...all] ...
+ ✓ Compiled /api/auth/[...all] in 1263ms (1558 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 98ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1817ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 75ms
+ GET /api/auth/get-session 200 in 1971ms
+ ✓ Compiled in 558ms (1558 modules)
+ ✓ Compiled in 1ms (1110 modules)
+ ✓ Compiled in 0ms (1110 modules)
+ ✓ Compiled in 0ms (1110 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 622ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 989ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 195ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 898ms
+ ✓ Compiled in 967ms (1558 modules)
+ GET /api/auth/get-session 200 in 1112ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 43ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 145ms
+ ✓ Compiled in 587ms (1558 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 127ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 227ms
+ GET /api/auth/get-session 200 in 301ms
+ ✓ Compiled in 356ms (1558 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 66ms
+ ✓ Compiled /api/boards/comments/move/[slug] in 418ms (1546 modules)
+Moving comment: 1 2 645c0ba0-ca7c-45d4-841b-01ccdd0b8ba4 yo 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 920ms
+Moving comment: 2 1 645c0ba0-ca7c-45d4-841b-01ccdd0b8ba4 yo 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 109ms
+Moving comment: 1 2 645c0ba0-ca7c-45d4-841b-01ccdd0b8ba4 yo 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 116ms
+Moving comment: 2 1 bfd86171-8c5c-4fbe-be36-013f0b334d39 lk 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 109ms
+Moving comment: 1 2 bfd86171-8c5c-4fbe-be36-013f0b334d39 lk 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 105ms
+Moving comment: 2 3 a12230d9-c512-4f0b-9b65-2e847544a596 fdfd 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 110ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 110ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 137ms
+ GET /api/auth/get-session 200 in 325ms
+Moving comment: 3 1 a12230d9-c512-4f0b-9b65-2e847544a596 fdfd 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 165ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 50ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /api/auth/get-session 200 in 69ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 87ms
+ ✓ Compiled /api/boards/comments in 175ms (1114 modules)
+ DELETE /api/boards/comments 200 in 334ms
+Moving comment: 1 2 e92dbcbc-ed16-4c76-9dd3-59411c7306e0 ts 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 118ms
+Moving comment: 2 1 bfd86171-8c5c-4fbe-be36-013f0b334d39 lk 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 110ms
+Moving comment: 2 1 645c0ba0-ca7c-45d4-841b-01ccdd0b8ba4 yo 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 107ms
+Moving comment: 2 1 e92dbcbc-ed16-4c76-9dd3-59411c7306e0 ts 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 111ms
+Moving comment: 2 1 e7b73551-ee8f-4eba-a6f2-811441770838 fdfd 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 107ms
+Moving comment: 3 1 77fd7ca3-95ce-46bc-b703-92064c978b7c l 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 109ms
+Moving comment: 1 2 e7b73551-ee8f-4eba-a6f2-811441770838 fdfd 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 107ms
+Moving comment: 2 3 e7b73551-ee8f-4eba-a6f2-811441770838 fdfd 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 108ms
+Moving comment: 3 2 e7b73551-ee8f-4eba-a6f2-811441770838 fdfd 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 124ms
+Moving comment: 2 3 e7b73551-ee8f-4eba-a6f2-811441770838 fdfd 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 130ms
+Moving comment: 1 2 bfd86171-8c5c-4fbe-be36-013f0b334d39 lk 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 208ms
+Moving comment: 2 3 bfd86171-8c5c-4fbe-be36-013f0b334d39 lk 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 119ms
+Moving comment: 1 2 77fd7ca3-95ce-46bc-b703-92064c978b7c l 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 260ms
+ ✓ Compiled /api/boards/[slug] in 1183ms (1077 modules)
+ ✓ Compiled in 1ms (643 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 690ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 963ms
+Moving comment: 1 2 645c0ba0-ca7c-45d4-841b-01ccdd0b8ba4 yo 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 118ms
+Moving comment: 2 1 77fd7ca3-95ce-46bc-b703-92064c978b7c l 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 116ms
+Moving comment: 1 2 77fd7ca3-95ce-46bc-b703-92064c978b7c l 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 114ms
+Moving comment: 2 1 77fd7ca3-95ce-46bc-b703-92064c978b7c l 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 111ms
+ ✓ Compiled in 499ms (1067 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 132ms
+ ✓ Compiled in 367ms (1067 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 76ms
+ ✓ Compiled /api/boards/[slug] in 415ms (1067 modules)
+ ✓ Compiled in 0ms (641 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 410ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 699ms
+ ✓ Compiled in 284ms (1089 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 39ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1182ms
+ ✓ Compiled in 391ms (1089 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 63ms
+ ✓ Compiled in 283ms (1089 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 42ms
+ ✓ Compiled in 244ms (1089 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 64ms
+ ✓ Compiled /api/boards/comments/move/[slug] in 160ms (643 modules)
+Moving comment: 1 2 e92dbcbc-ed16-4c76-9dd3-59411c7306e0 ts 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 419ms
+ ✓ Compiled /api/boards/comments in 103ms (645 modules)
+ POST /api/boards/comments 200 in 251ms
+ ✓ Compiled in 384ms (1093 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 62ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 222ms
+ POST /api/boards/comments 200 in 46ms
+ POST /api/boards/comments 200 in 50ms
+Moving comment: 2 1 d320d3c9-3a05-4b13-acdb-d22babe73966 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 119ms
+Moving comment: 1 3 d320d3c9-3a05-4b13-acdb-d22babe73966 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 108ms
+ POST /api/boards/comments 200 in 44ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 170ms
+ ○ Compiling /api/auth/[...all] ...
+ ✓ Compiled /api/auth/[...all] in 959ms (1114 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1621ms
+ GET /api/auth/get-session 200 in 1698ms
+ POST /api/boards/comments 200 in 38ms
+ POST /api/boards/comments 200 in 34ms
+Moving comment: 1 2 6a3fbc56-159d-4b15-9494-afe0f13b461f test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 118ms
+Moving comment: 2 1 6a3fbc56-159d-4b15-9494-afe0f13b461f test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 112ms
+ POST /api/boards/comments 200 in 40ms
+ ✓ Compiled /api/boards/[slug] in 972ms (1079 modules)
+ ✓ Compiled in 1ms (645 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 619ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 950ms
+ ✓ Compiled in 1161ms (1093 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 97ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 184ms
+ ○ Compiling /api/auth/[...all] ...
+ ✓ Compiled /api/auth/[...all] in 981ms (1114 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1662ms
+ GET /api/auth/get-session 200 in 1771ms
+ POST /api/boards/comments 200 in 43ms
+ POST /api/boards/comments 200 in 41ms
+ POST /api/boards/comments 200 in 39ms
+ POST /api/boards/comments 200 in 32ms
+ POST /api/boards/comments 200 in 41ms
+Moving comment: 1 2 ac973f43-24bc-4ad3-9ac0-372a89ab8be4 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 116ms
+ ✓ Compiled /api/boards/comments/[slug] in 251ms (629 modules)
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 514ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 42ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 48ms
+ POST /api/boards/comments/17d980fc-9523-4de2-9edd-ad48db860001 200 in 41ms
+ ✓ Compiled in 669ms (434 modules)
+ ✓ Compiled in 374ms (1067 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 203ms
+ ✓ Compiled in 1939ms (1849 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 79ms
+ ✓ Compiled in 880ms (1849 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 60ms
+ ○ Compiling /api/boards/comments/move/[slug] ...
+ ✓ Compiled /api/boards/comments/move/[slug] in 527ms (1020 modules)
+Moving comment: 1 2 24491e6a-81df-4716-a0ea-4b03dc66e011 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 907ms
+Moving comment: 1 2 7fbd75ce-8bb4-4496-bb00-29c50aaeb1da test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 363ms
+Moving comment: 2 1 24491e6a-81df-4716-a0ea-4b03dc66e011 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 158ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 607ms (1859 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 592ms
+ ○ Compiling /api/boards/[slug] ...
+ ✓ Compiled /api/boards/[slug] in 1279ms (1489 modules)
+ ✓ Compiled (1503 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 2141ms
+ GET /api/auth/get-session 200 in 2288ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 795ms (2342 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 831ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 284ms
+ GET /api/auth/get-session 200 in 349ms
+ ✓ Compiled in 858ms (2342 modules)
+ ✓ Compiled in 0ms (1503 modules)
+ ✓ Compiled in 0ms (1503 modules)
+ ✓ Compiled in 0ms (1503 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1556ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1285ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 818ms (2342 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 514ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 515ms
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 126ms
+ GET /api/auth/get-session 200 in 307ms
+ ⚠ Fast Refresh had to perform a full reload due to a runtime error.
+ ✓ Compiled in 691ms (2342 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 687ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 248ms
+ GET /api/auth/get-session 200 in 310ms
+Moving comment: 1 2 6a3fbc56-159d-4b15-9494-afe0f13b461f test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 233ms
+ ✓ Compiled /api/boards/comments in 473ms (1505 modules)
+ POST /api/boards/comments 200 in 640ms
+ POST /api/boards/comments 200 in 34ms
+ POST /api/boards/comments 200 in 42ms
+Moving comment: 1 3 58f53d7b-8790-4e2c-9c81-e10c1089f729 wwww 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 115ms
+Moving comment: 3 1 58f53d7b-8790-4e2c-9c81-e10c1089f729 wwww 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 113ms
+Moving comment: 2 3 832732b4-31d0-41ca-8627-cbd3f7a25394 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 218ms
+ ✓ Compiled in 1523ms (1849 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 150ms
+ ✓ Compiled in 408ms (1849 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 93ms
+ ✓ Compiled in 311ms (1849 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 45ms
+ ✓ Compiled /api/boards/comments/move/[slug] in 112ms (1020 modules)
+Moving comment: 2 3 af8ca7dc-c2a2-4583-85a1-fa32f444de88 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 395ms
+Moving comment: 3 2 af8ca7dc-c2a2-4583-85a1-fa32f444de88 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 108ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 240ms
+ ○ Compiling /api/boards/[slug] ...
+ ✓ Compiled /api/boards/[slug] in 1536ms (1489 modules)
+ ✓ Compiled (1503 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 2345ms
+ GET /api/auth/get-session 200 in 2471ms
+Moving comment: 1 2 0a0abd9d-8523-41c1-ad18-b94ae4fffbc0 wow 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 121ms
+Moving comment: 2 1 0a0abd9d-8523-41c1-ad18-b94ae4fffbc0 wow 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 119ms
+ ✓ Compiled in 1231ms (2342 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 69ms
+ ✓ Compiled in 465ms (2342 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 54ms
+ ✓ Compiled in 294ms (1849 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 142ms
+ ✓ Compiled /api/boards/comments/move/[slug] in 277ms (1020 modules)
+Moving comment: 1 2 5b73cf69-8271-4c54-a879-a465b92a0d47 fade 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 591ms
+Moving comment: 2 3 6a3fbc56-159d-4b15-9494-afe0f13b461f test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 145ms
+Moving comment: 3 2 6a3fbc56-159d-4b15-9494-afe0f13b461f test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 146ms
+Moving comment: 3 2 832732b4-31d0-41ca-8627-cbd3f7a25394 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 110ms
+Moving comment: 2 3 7fbd75ce-8bb4-4496-bb00-29c50aaeb1da test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 126ms
+Moving comment: 3 2 7fbd75ce-8bb4-4496-bb00-29c50aaeb1da test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 109ms
+Moving comment: 3 2 d320d3c9-3a05-4b13-acdb-d22babe73966 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 107ms
+Moving comment: 1 2 58f53d7b-8790-4e2c-9c81-e10c1089f729 wwww 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 109ms
+Moving comment: 1 2 71eaa09b-2c10-4ac4-9923-dc4855ea383c wat 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 105ms
+Moving comment: 1 2 24491e6a-81df-4716-a0ea-4b03dc66e011 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 110ms
+Moving comment: 1 2 0a0abd9d-8523-41c1-ad18-b94ae4fffbc0 wow 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 105ms
+Moving comment: 1 2 77fd7ca3-95ce-46bc-b703-92064c978b7c l 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 105ms
+Moving comment: 2 3 24491e6a-81df-4716-a0ea-4b03dc66e011 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 109ms
+Moving comment: 2 1 1bf08cdb-b9ff-42b3-bf37-35a9ed36dec9 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 107ms
+Moving comment: 2 1 d00d49e9-c073-4534-b30f-79022d04bd7c test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 143ms
+Moving comment: 2 1 87c2757f-3f17-4f6b-9f6b-e81e30949fdf test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 115ms
+Moving comment: 2 1 af8ca7dc-c2a2-4583-85a1-fa32f444de88 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 111ms
+Moving comment: 1 2 87c2757f-3f17-4f6b-9f6b-e81e30949fdf test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 108ms
+Moving comment: 2 1 ac973f43-24bc-4ad3-9ac0-372a89ab8be4 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 108ms
+Moving comment: 2 3 6a3fbc56-159d-4b15-9494-afe0f13b461f test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 215ms
+Moving comment: 3 2 6a3fbc56-159d-4b15-9494-afe0f13b461f test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 143ms
+ ✓ Compiled in 1195ms (1859 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 189ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 323ms
+ ✓ Compiled /api/boards/[slug] in 256ms (1489 modules)
+ ✓ Compiled (1503 modules)
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 1854ms
+ GET /api/auth/get-session 200 in 1981ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 292ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 73ms
+ GET /api/auth/get-session 200 in 74ms
+Moving comment: 3 2 24491e6a-81df-4716-a0ea-4b03dc66e011 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 117ms
+Moving comment: 2 3 e92dbcbc-ed16-4c76-9dd3-59411c7306e0 ts 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 108ms
+Moving comment: 3 2 e92dbcbc-ed16-4c76-9dd3-59411c7306e0 ts 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 105ms
+Moving comment: 2 1 832732b4-31d0-41ca-8627-cbd3f7a25394 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 129ms
+Moving comment: 2 1 7fbd75ce-8bb4-4496-bb00-29c50aaeb1da test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 128ms
+ ✓ Compiled in 1255ms (2342 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 133ms
+Moving comment: 2 3 58f53d7b-8790-4e2c-9c81-e10c1089f729 wwww 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 263ms
+Moving comment: 3 2 58f53d7b-8790-4e2c-9c81-e10c1089f729 wwww 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 116ms
+Moving comment: 1 2 ac973f43-24bc-4ad3-9ac0-372a89ab8be4 test 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 136ms
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 233ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 364ms
+ GET /api/auth/get-session 200 in 454ms
+Moving comment: 2 1 645c0ba0-ca7c-45d4-841b-01ccdd0b8ba4 yo 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 112ms
+Moving comment: 1 2 645c0ba0-ca7c-45d4-841b-01ccdd0b8ba4 yo 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 107ms
+Moving comment: 2 1 0a0abd9d-8523-41c1-ad18-b94ae4fffbc0 wow 0
+ POST /api/boards/comments/move/17d980fc-9523-4de2-9edd-ad48db860001 200 in 103ms
+ ✓ Compiled in 4s (839 modules)
+ ✓ Compiled in 253ms (839 modules)
+ GET /boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 219ms
+Fetching board data for: 17d980fc-9523-4de2-9edd-ad48db860001
+Board data retrieved: { boardId: '17d980fc-9523-4de2-9edd-ad48db860001', columnsCount: 3 }
+ GET /api/boards/17d980fc-9523-4de2-9edd-ad48db860001 200 in 228ms
+ GET /api/auth/get-session 200 in 530ms
+ ✓ Compiled in 2.4s (839 modules)
+ ✓ Compiled in 730ms (839 modules)
