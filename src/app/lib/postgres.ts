@@ -3,10 +3,8 @@ import { Pool, PoolClient } from 'pg';
 // Database connection pool
 const pool = new Pool({
   connectionString: process.env.POSTGRES_CONNECTION_STRING,
-  // Connection pool settings
-  max: 20,
-  idleTimeoutMillis: 30000,
-  connectionTimeoutMillis: 2000,
+  max: 5,
+  idleTimeoutMillis: 10000,
 });
 
 // Types matching our schema
@@ -217,47 +215,14 @@ export async function decrementCommentLikes(
 export async function moveComment(
   boardId: string,
   commentId: string,
-  sourceColumnId: number,
+  _sourceColumnId: number,
   destinationColumnId: number,
-  commentText: string,
-  commentLikes: number
+  _commentText: string,
+  _commentLikes: number
 ): Promise<void> {
-  const client = await getClient();
-  try {
-    await client.query('BEGIN');
-    
-    // Delete from source column
-    await client.query(
-      'DELETE FROM comments WHERE board_id = $1 AND column_id = $2 AND comment_id = $3',
-      [boardId, sourceColumnId, commentId]
-    );
-    
-    // Insert into destination column
-    await client.query(
-      `INSERT INTO comments (comment_id, board_id, column_id, comment_text, comment_likes)
-       VALUES ($1, $2, $3, $4, $5)`,
-      [commentId, boardId, destinationColumnId, commentText, commentLikes]
-    );
-    
-    await client.query('COMMIT');
-  } catch (error) {
-    await client.query('ROLLBACK');
-    throw error;
-  } finally {
-    client.release();
-  }
-}
-
-// User operations
-export async function createUser(userId: string, email?: string, username?: string): Promise<void> {
   await query(
-    `INSERT INTO users (user_id, email, username) 
-     VALUES ($1, $2, $3)
-     ON CONFLICT (user_id) DO UPDATE SET
-     email = COALESCE($2, users.email),
-     username = COALESCE($3, users.username),
-     updated_at = CURRENT_TIMESTAMP`,
-    [userId, email, username]
+    'UPDATE comments SET column_id = $1 WHERE board_id = $2 AND comment_id = $3',
+    [destinationColumnId, boardId, commentId]
   );
 }
 
