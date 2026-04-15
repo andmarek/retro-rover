@@ -1,8 +1,9 @@
 import { Pool, PoolClient } from 'pg';
+import { getPostgresPoolConfig } from '@/lib/postgres-config';
 
 // Database connection pool
 const pool = new Pool({
-  connectionString: process.env.POSTGRES_CONNECTION_STRING,
+  ...getPostgresPoolConfig(),
   max: 5,
   idleTimeoutMillis: 10000,
 });
@@ -75,6 +76,8 @@ export async function getBoard(boardId: string): Promise<BoardWithColumnsAndComm
       `SELECT bc.*, COALESCE(json_agg(
         json_build_object(
           'comment_id', c.comment_id,
+          'board_id', c.board_id,
+          'column_id', c.column_id,
           'comment_text', c.comment_text,
           'comment_likes', c.comment_likes,
           'created_at', c.created_at,

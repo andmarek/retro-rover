@@ -8,19 +8,56 @@ import { cn } from "@/lib/utils"
 import { useDroppable } from "@dnd-kit/core"
 import { SortableContext, useSortable, verticalListSortingStrategy } from "@dnd-kit/sortable"
 import { CSS } from "@dnd-kit/utilities"
-import { motion } from "framer-motion"
+import { Plus } from "lucide-react"
 
 export type ColumnType = "went-well" | "to-improve" | "action-items"
 
+const columnThemes: Record<
+  ColumnType,
+  {
+    accent: string
+    badge: string
+    dropState: string
+    emptyState: string
+    addButton: string
+  }
+> = {
+  "went-well": {
+    accent: "bg-emerald-500",
+    badge: "bg-emerald-100 text-emerald-700 dark:bg-emerald-500/15 dark:text-emerald-200",
+    dropState: "border-emerald-200/80 bg-emerald-50/65 dark:border-emerald-400/20 dark:bg-emerald-500/10",
+    emptyState: "border-emerald-100/80 bg-emerald-50/35 dark:border-emerald-400/10 dark:bg-emerald-500/5",
+    addButton: "hover:border-emerald-300/80 hover:bg-emerald-50/55 dark:hover:border-emerald-400/20 dark:hover:bg-emerald-500/10",
+  },
+  "to-improve": {
+    accent: "bg-amber-500",
+    badge: "bg-amber-100 text-amber-700 dark:bg-amber-500/15 dark:text-amber-200",
+    dropState: "border-amber-200/80 bg-amber-50/65 dark:border-amber-400/20 dark:bg-amber-500/10",
+    emptyState: "border-amber-100/80 bg-amber-50/35 dark:border-amber-400/10 dark:bg-amber-500/5",
+    addButton: "hover:border-amber-300/80 hover:bg-amber-50/55 dark:hover:border-amber-400/20 dark:hover:bg-amber-500/10",
+  },
+  "action-items": {
+    accent: "bg-sky-500",
+    badge: "bg-sky-100 text-sky-700 dark:bg-sky-500/15 dark:text-sky-200",
+    dropState: "border-sky-200/80 bg-sky-50/65 dark:border-sky-400/20 dark:bg-sky-500/10",
+    emptyState: "border-sky-100/80 bg-sky-50/35 dark:border-sky-400/10 dark:bg-sky-500/5",
+    addButton: "hover:border-sky-300/80 hover:bg-sky-50/55 dark:hover:border-sky-400/20 dark:hover:bg-sky-500/10",
+  },
+}
+
+const laneLabels: Record<ColumnType, string> = {
+  "went-well": "Went well",
+  "to-improve": "To improve",
+  "action-items": "Action items",
+}
+
 type RetroColumnProps = {
   title: string
-  description: string
   columnType: ColumnType
   cards: RetroCardType[]
   onAddCard: (columnType: ColumnType, content: string) => void
   onDeleteCard: (columnType: ColumnType, cardId: string) => void
   onVoteCard: (columnType: ColumnType, cardId: string) => void
-  accentColor: "primary" | "accent" | "destructive" | "success"
   sortByVotes: boolean
 }
 
@@ -57,23 +94,22 @@ function SortableCard({
       {...attributes}
       style={style}
     >
-      <RetroCard card={card} onDelete={onDelete} onVote={onVote} />
+      <RetroCard card={card} onDelete={onDelete} onVote={onVote} columnType={columnType} />
     </div>
   )
 }
 
 export function RetroColumn({
   title,
-  description,
   columnType,
   cards,
   onAddCard,
   onDeleteCard,
   onVoteCard,
-  accentColor,
   sortByVotes,
 }: RetroColumnProps) {
   const [isAdding, setIsAdding] = useState(false)
+  const theme = columnThemes[columnType]
 
   const displayCards = sortByVotes ? [...cards].sort((a, b) => b.votes - a.votes) : cards
 
@@ -85,39 +121,56 @@ export function RetroColumn({
   })
 
   const handleAddCard = (content: string) => {
-    console.log("HandleAddCard");
     onAddCard(columnType, content)
     setIsAdding(false)
   }
 
-  const accentClasses = {
-    primary: "border-primary/20 bg-primary/5",
-    accent: "border-accent/20 bg-accent/5",
-    destructive: "border-destructive/20 bg-destructive/5",
-    success: "border-green-500/20 bg-green-500/5",
-  }
-
   return (
-    <div className="flex flex-col">
-      {/* Column Header */}
-      <div className={cn("mb-4 rounded-xl border-2 p-4 transition-colors", accentClasses[accentColor])}>
-        <h2 className="text-balance text-xl font-semibold">{title}</h2>
-        <p className="mt-1 text-pretty text-sm text-muted-foreground">{description}</p>
+    <div
+      className={cn(
+        "flex h-full flex-col px-4 py-4 sm:px-5 sm:py-5",
+        isOver && "rounded-[24px]",
+        isOver && theme.dropState
+      )}
+    >
+      <div className="flex items-center justify-between gap-4">
+        <div className="min-w-0">
+          <span className={cn("inline-flex rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em]", theme.badge)}>
+            {laneLabels[columnType]}
+          </span>
+          <h2 className="mt-3 truncate text-xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-2xl">{title}</h2>
+        </div>
+
+        <div className="flex items-center gap-3">
+          <div className={cn("hidden h-1.5 w-12 rounded-full sm:block", theme.accent)} />
+          <span className="rounded-full border border-slate-200/80 bg-white/90 px-3 py-1 text-sm font-medium text-slate-600 shadow-sm dark:border-white/10 dark:bg-white/5 dark:text-slate-300">
+            {cards.length}
+          </span>
+        </div>
       </div>
 
-      {/* Cards Container */}
-      <div 
-        ref={setNodeRef} 
+      <div
+        ref={setNodeRef}
         className={cn(
-          "flex flex-1 flex-col gap-3 rounded-xl border border-border bg-card/50 p-4 transition-colors duration-200",
-          isOver && "bg-accent/20 border-accent/50 ring-2 ring-accent/30"
+          "mt-5 flex min-h-[18rem] flex-1 flex-col gap-3 transition duration-200",
+          isOver && "scale-[0.995]"
         )}
       >
         {cards.length === 0 && !isAdding && (
-          <div className="flex flex-1 items-center justify-center py-12">
-            <p className="text-sm text-muted-foreground">
-              {isOver ? "Drop card here" : "No cards yet. Add one to get started!"}
-            </p>
+          <div
+            className={cn(
+              "flex min-h-[13rem] flex-1 items-center justify-center rounded-[24px] border border-dashed px-6 text-center",
+              isOver
+                ? theme.dropState
+                : theme.emptyState
+            )}
+          >
+            <div>
+              <p className="text-sm font-medium text-slate-800 dark:text-slate-100">
+                {isOver ? "Drop note here" : "No notes yet"}
+              </p>
+              <p className="mt-2 text-sm leading-6 text-slate-500 dark:text-slate-400">Add a note or move one here.</p>
+            </div>
           </div>
         )}
 
@@ -135,36 +188,25 @@ export function RetroColumn({
             />
           ))}
         </SortableContext>
-        
-        {/* Drop zone indicator */}
-        {isOver && cards.length > 0 && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: 60 }}
-            exit={{ opacity: 0, height: 0 }}
-            className="rounded-lg border-2 border-dashed border-accent/50 bg-accent/10 flex items-center justify-center"
-          >
-            <p className="text-xs text-muted-foreground">Drop here</p>
-          </motion.div>
-        )}
 
-        {isAdding && (
+        {/* Add note input */}
+        {isAdding ? (
           <RetroInput
             onSubmit={handleAddCard}
             onCancel={() => setIsAdding(false)}
-            placeholder="Enter your thoughts..."
+            placeholder="Type your note..."
+            columnType={columnType}
           />
-        )}
-
-        {!isAdding && (
+        ) : (
           <button
             onClick={() => setIsAdding(true)}
-            className="group mt-2 flex items-center justify-center gap-2 rounded-lg border-2 border-dashed border-border bg-muted/30 px-4 py-3 text-sm font-medium text-muted-foreground transition-all hover:border-primary/50 hover:bg-muted/50 hover:text-foreground"
+            className={cn(
+              "mt-1 flex w-full items-center justify-center gap-2 rounded-[18px] border border-slate-200/80 bg-white/65 px-4 py-3.5 text-sm font-medium text-slate-600 transition hover:border-slate-300 dark:border-white/10 dark:bg-white/5 dark:text-slate-300 dark:hover:border-white/20",
+              theme.addButton
+            )}
           >
-            <span className="flex h-5 w-5 items-center justify-center rounded-full bg-muted-foreground/10 transition-colors group-hover:bg-primary/20">
-              <span className="text-xs">+</span>
-            </span>
-            Add Card
+            <Plus className="h-4 w-4" />
+            <span>Add note</span>
           </button>
         )}
       </div>

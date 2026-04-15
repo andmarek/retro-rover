@@ -1,17 +1,16 @@
 "use client"
 
 import type React from "react"
-import { useState } from "react"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
-import { ArrowLeft, Users, Lock, Unlock, Check } from "lucide-react"
-import Link from "next/link"
+import { Textarea } from "@/components/ui/textarea"
+import { ArrowLeft, Check, Lock, Unlock, Users } from "lucide-react"
 
 const templates = [
   {
@@ -61,10 +60,8 @@ export default function NewBoardPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault()
 
-    // Clear previous errors
     setErrors({})
 
-    // Validation
     const newErrors: { name?: string; template?: string } = {}
     if (!name.trim()) {
       newErrors.name = "Board name is required"
@@ -99,8 +96,7 @@ export default function NewBoardPage() {
       }
 
       const createdBoard = await response.json()
-      
-      // Navigate to the created board
+
       router.push(`/boards/${createdBoard.id}`)
     } catch (error) {
       console.error("Error creating board:", error)
@@ -115,206 +111,222 @@ export default function NewBoardPage() {
   const selectedTemplate = templates.find((t) => t.value === template)
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="border-b border-border">
-        <div className="container mx-auto px-4 py-4">
+    <div className="relative min-h-screen bg-slate-100 text-slate-950 dark:bg-slate-950 dark:text-slate-50">
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-64 bg-gradient-to-b from-white/60 to-transparent dark:from-white/5" />
+
+      <div className="relative mx-auto max-w-4xl px-4 py-10 sm:px-6 lg:px-8">
+        <div className="mb-10">
           <Link
             href="/boards"
-            className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors"
+            className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-slate-950 dark:text-slate-300 dark:hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Boards
+            Back to boards
           </Link>
-        </div>
-      </div>
 
-      <div className="container mx-auto px-4 py-12 max-w-4xl">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">Create New Board</h1>
-          <p className="text-muted-foreground text-lg">
-            Set up a new retrospective board with detailed configuration options
+          <h1 className="mt-6 text-4xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-5xl">
+            Create board
+          </h1>
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300 sm:text-lg">
+            Fill out the form below to create a new retrospective board.
           </p>
+
+          {selectedTemplate ? (
+            <p className="mt-4 text-sm text-slate-500 dark:text-slate-400">
+              Selected template: <span className="font-medium text-slate-950 dark:text-white">{selectedTemplate.label}</span>
+            </p>
+          ) : null}
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-8">
-          {/* Basic Information */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Basic Information</CardTitle>
-              <CardDescription>Give your board a name and description</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="space-y-2">
-                <Label htmlFor="name">Board Name *</Label>
-                <Input
-                  id="name"
-                  placeholder="Sprint 24 Retrospective"
-                  value={name}
-                  onChange={(e) => {
-                    setName(e.target.value)
-                    if (errors.name) setErrors({ ...errors, name: undefined })
-                  }}
-                  aria-invalid={!!errors.name}
-                  className="text-base"
-                />
-                {errors.name && <p className="text-sm text-destructive">{errors.name}</p>}
-              </div>
+        <form onSubmit={handleSubmit} className="space-y-7">
+          <section className="space-y-5 rounded-[22px] border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-slate-900/70">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">Board details</h2>
+              <p className="mt-2 text-base text-slate-600 dark:text-slate-300">
+                Give the board a clear name and optional description.
+              </p>
+            </div>
 
-              <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
-                <Textarea
-                  id="description"
-                  placeholder="Add context, goals, or any important information for this retrospective..."
-                  className="resize-none min-h-[100px] text-base"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
-                />
-                <p className="text-sm text-muted-foreground">Optional: Provide context for your team</p>
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Template Selection */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Template *</CardTitle>
-              <CardDescription>Choose a retrospective format that fits your team&aposs needs</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <RadioGroup
-                value={template}
-                onValueChange={(value) => {
-                  setTemplate(value)
-                  if (errors.template) setErrors({ ...errors, template: undefined })
+            <div className="space-y-3">
+              <Label htmlFor="name" className="text-base font-medium text-slate-900 dark:text-white">Board name</Label>
+              <Input
+                id="name"
+                placeholder="Sprint 24 retrospective"
+                value={name}
+                onChange={(e) => {
+                  setName(e.target.value)
+                  if (errors.name) setErrors({ ...errors, name: undefined })
                 }}
-              >
-                <div className="space-y-3">
-                  {templates.map((t) => (
-                    <div
-                      key={t.value}
-                      className={`relative flex items-start space-x-3 rounded-lg border-2 p-4 cursor-pointer transition-colors ${
-                        template === t.value
-                          ? "border-primary bg-primary/5"
-                          : "border-border hover:border-muted-foreground/50"
-                      }`}
-                      onClick={() => {
-                        setTemplate(t.value)
-                        if (errors.template) setErrors({ ...errors, template: undefined })
-                      }}
-                    >
-                      <RadioGroupItem value={t.value} id={t.value} className="mt-1" />
-                      <div className="flex-1">
-                        <Label htmlFor={t.value} className="text-base font-semibold cursor-pointer">
-                          {t.label}
-                        </Label>
-                        <p className="text-sm text-muted-foreground mt-1">{t.description}</p>
-                        <div className="flex gap-2 mt-3 flex-wrap">
-                          {t.columns.map((col) => (
-                            <span key={col} className="text-xs px-2 py-1 rounded-md bg-muted text-muted-foreground">
-                              {col}
-                            </span>
-                          ))}
+                aria-invalid={!!errors.name}
+                className="h-12 rounded-xl border-slate-300 bg-white px-4 text-base text-slate-950 placeholder:text-slate-400 focus-visible:ring-slate-400 dark:border-white/15 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 dark:focus-visible:ring-white/20"
+              />
+              {errors.name ? <p className="text-sm text-destructive">{errors.name}</p> : null}
+            </div>
+
+            <div className="space-y-3">
+              <Label htmlFor="description" className="text-base font-medium text-slate-900 dark:text-white">Description</Label>
+              <Textarea
+                id="description"
+                placeholder="Optional details for your team"
+                className="min-h-[140px] resize-y rounded-xl border-slate-300 bg-white px-4 py-3 text-base text-slate-950 placeholder:text-slate-400 focus-visible:ring-slate-400 dark:border-white/15 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 dark:focus-visible:ring-white/20"
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+              />
+            </div>
+          </section>
+
+          <section className="space-y-5 rounded-[22px] border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-slate-900/70">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">Template</h2>
+              <p className="mt-2 text-base text-slate-600 dark:text-slate-300">
+                Choose the retrospective format you want to use.
+              </p>
+            </div>
+
+            <RadioGroup
+              value={template}
+              onValueChange={(value) => {
+                setTemplate(value)
+                if (errors.template) setErrors({ ...errors, template: undefined })
+              }}
+              className="space-y-3"
+            >
+              {templates.map((t) => {
+                const selected = template === t.value
+
+                return (
+                  <label
+                    key={t.value}
+                    htmlFor={t.value}
+                    className={`flex cursor-pointer items-start gap-4 rounded-2xl border p-5 transition-colors ${
+                      selected
+                        ? "border-slate-900 bg-slate-50 dark:border-white dark:bg-white/5"
+                        : "border-slate-200 bg-white hover:border-slate-300 dark:border-white/10 dark:bg-slate-950/40 dark:hover:border-white/20"
+                    }`}
+                  >
+                    <RadioGroupItem
+                      value={t.value}
+                      id={t.value}
+                      className="mt-1 border-slate-400 text-slate-900 dark:border-white/40 dark:text-white"
+                    />
+
+                    <div className="min-w-0 flex-1">
+                      <div className="flex items-start justify-between gap-3">
+                        <div>
+                          <div className="text-xl font-medium text-slate-950 dark:text-white">{t.label}</div>
+                          <p className="mt-2 text-base text-slate-600 dark:text-slate-300">{t.description}</p>
                         </div>
+                        {selected ? <Check className="mt-1 h-4 w-4 text-slate-900 dark:text-white" /> : null}
                       </div>
-                      {template === t.value && <Check className="h-5 w-5 text-primary flex-shrink-0" />}
+
+                      <p className="mt-3 text-base text-slate-600 dark:text-slate-300">
+                        Columns: {t.columns.join(", ")}
+                      </p>
                     </div>
-                  ))}
-                </div>
-              </RadioGroup>
-              {errors.template && <p className="text-sm text-destructive mt-2">{errors.template}</p>}
-            </CardContent>
-          </Card>
+                  </label>
+                )
+              })}
+            </RadioGroup>
 
-          {/* Team Members */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="flex items-center gap-2">
-                <Users className="h-5 w-5" />
-                Team Members
-              </CardTitle>
-              <CardDescription>Invite team members to collaborate on this board</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-2">
-                <Label htmlFor="team-members">Email Addresses</Label>
-                <Textarea
-                  id="team-members"
-                  placeholder="Enter email addresses separated by commas&#10;example: alice@company.com, bob@company.com"
-                  className="resize-none min-h-[80px] text-base font-mono text-sm"
-                  value={teamMembers}
-                  onChange={(e) => setTeamMembers(e.target.value)}
-                />
-                <p className="text-sm text-muted-foreground">Optional: Invite team members via email</p>
+            {errors.template ? <p className="text-sm text-destructive">{errors.template}</p> : null}
+          </section>
+
+          <section className="space-y-5 rounded-[22px] border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-slate-900/70">
+            <div className="flex items-center gap-2">
+              <Users className="h-5 w-5 text-slate-500 dark:text-slate-400" />
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">Team members</h2>
+                <p className="mt-2 text-base text-slate-600 dark:text-slate-300">
+                  Optionally add teammate email addresses.
+                </p>
               </div>
-            </CardContent>
-          </Card>
+            </div>
 
-          {/* Board Settings */}
-          <Card>
-            <CardHeader>
-              <CardTitle>Board Settings</CardTitle>
-              <CardDescription>Configure privacy and collaboration options</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5 flex-1">
-                  <div className="flex items-center gap-2">
+            <div className="space-y-3">
+              <Label htmlFor="team-members" className="text-base font-medium text-slate-900 dark:text-white">Email addresses</Label>
+              <Textarea
+                id="team-members"
+                placeholder="alice@company.com, bob@company.com"
+                className="min-h-[140px] resize-y rounded-xl border-slate-300 bg-white px-4 py-3 text-base text-slate-950 placeholder:text-slate-400 focus-visible:ring-slate-400 dark:border-white/15 dark:bg-slate-950 dark:text-white dark:placeholder:text-slate-500 dark:focus-visible:ring-white/20"
+                value={teamMembers}
+                onChange={(e) => setTeamMembers(e.target.value)}
+              />
+              <p className="text-sm text-slate-500 dark:text-slate-400">
+                Separate addresses with commas or new lines.
+              </p>
+            </div>
+          </section>
+
+          <section className="space-y-5 rounded-[22px] border border-slate-200 bg-white p-7 shadow-sm dark:border-white/10 dark:bg-slate-900/70">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-slate-950 dark:text-white">Board settings</h2>
+              <p className="mt-2 text-base text-slate-600 dark:text-slate-300">
+                Adjust privacy and collaboration options.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="flex items-start justify-between gap-4 rounded-2xl border border-slate-200 p-5 dark:border-white/10">
+                <div className="pr-4">
+                  <div className="flex items-center gap-2 text-base font-medium text-slate-950 dark:text-white">
                     {isPrivate ? <Lock className="h-4 w-4" /> : <Unlock className="h-4 w-4" />}
-                    <Label htmlFor="private" className="text-base font-semibold">
-                      Private Board
-                    </Label>
+                    <Label htmlFor="private">Private board</Label>
                   </div>
-                  <p className="text-sm text-muted-foreground">Only invited team members can view and contribute</p>
+                  <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                    Only invited team members can access the board.
+                  </p>
                 </div>
                 <Switch id="private" checked={isPrivate} onCheckedChange={setIsPrivate} />
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5 flex-1">
-                  <Label htmlFor="anonymous" className="text-base font-semibold">
-                    Allow Anonymous Cards
-                  </Label>
-                  <p className="text-sm text-muted-foreground">
-                    Team members can submit cards without showing their name
+              <div className="flex items-start justify-between gap-4 rounded-2xl border border-slate-200 p-5 dark:border-white/10">
+                <div className="pr-4">
+                  <div className="text-base font-medium text-slate-950 dark:text-white">
+                    <Label htmlFor="anonymous">Allow anonymous cards</Label>
+                  </div>
+                  <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                    Team members can post without showing their name.
                   </p>
                 </div>
                 <Switch id="anonymous" checked={allowAnonymous} onCheckedChange={setAllowAnonymous} />
               </div>
 
-              <div className="flex items-center justify-between">
-                <div className="space-y-0.5 flex-1">
-                  <Label htmlFor="voting" className="text-base font-semibold">
-                    Enable Voting
-                  </Label>
-                  <p className="text-sm text-muted-foreground">
-                    Allow team members to vote on cards to prioritize discussion
+              <div className="flex items-start justify-between gap-4 rounded-2xl border border-slate-200 p-5 dark:border-white/10">
+                <div className="pr-4">
+                  <div className="text-base font-medium text-slate-950 dark:text-white">
+                    <Label htmlFor="voting">Enable voting</Label>
+                  </div>
+                  <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                    Let the team vote on cards to prioritize discussion.
                   </p>
                 </div>
                 <Switch id="voting" checked={enableVoting} onCheckedChange={setEnableVoting} />
               </div>
-            </CardContent>
-          </Card>
-
-          {/* Error Display */}
-          {errors.submit && (
-            <div className="rounded-lg border border-destructive/50 bg-destructive/10 p-4">
-              <p className="text-sm text-destructive">{errors.submit}</p>
             </div>
-          )}
+          </section>
 
-          {/* Actions */}
-          <div className="flex gap-3 justify-end">
-            <Button 
-              type="button" 
-              variant="outline" 
-              size="lg" 
+          {errors.submit ? (
+            <div className="rounded-2xl border border-destructive/40 bg-destructive/10 p-4 text-sm text-destructive">
+              {errors.submit}
+            </div>
+          ) : null}
+
+          <div className="flex flex-col-reverse gap-3 sm:flex-row sm:justify-end">
+            <Button
+              type="button"
+              variant="outline"
               onClick={() => router.push("/boards")}
               disabled={isCreating}
+              className="rounded-xl border-slate-300 bg-white px-5 text-slate-700 hover:bg-slate-50 hover:text-slate-950 dark:border-white/15 dark:bg-slate-900 dark:text-slate-200 dark:hover:bg-slate-800 dark:hover:text-white"
             >
               Cancel
             </Button>
-            <Button type="submit" size="lg" disabled={isCreating}>
-              {isCreating ? "Creating..." : "Create Board"}
+            <Button
+              type="submit"
+              disabled={isCreating}
+              className="rounded-xl bg-slate-900 px-5 text-white hover:bg-slate-800 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
+            >
+              {isCreating ? "Creating board..." : "Create board"}
             </Button>
           </div>
         </form>

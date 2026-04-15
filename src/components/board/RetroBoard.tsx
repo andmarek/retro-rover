@@ -1,20 +1,39 @@
 "use client"
 
 import { useState, useEffect, useCallback } from "react"
-import { RetroColumn, ColumnType } from "./RetroColumn"
-import { RetroCard } from "./RetroCard"
-import { Button } from "@/components/ui/button"
-import { Download, Share2, ArrowUpDown, ThumbsUp, GripVertical } from "lucide-react"
-import { BoardWithColumnsAndComments } from "@/app/lib/postgres"
-import { webSocketManager } from "@/lib/websocket"
-import { DndContext, DragEndEvent, DragStartEvent, DragOverlay, useSensors, useSensor, PointerSensor, pointerWithin, rectIntersection, CollisionDetection } from "@dnd-kit/core"
+import {
+  ArrowUpDown,
+  GripVertical,
+  Moon,
+  Sun,
+} from "lucide-react"
+import {
+  CollisionDetection,
+  DndContext,
+  DragEndEvent,
+  DragOverlay,
+  DragStartEvent,
+  PointerSensor,
+  pointerWithin,
+  rectIntersection,
+  useSensor,
+  useSensors,
+} from "@dnd-kit/core"
 import { arrayMove } from "@dnd-kit/sortable"
+
+import { BoardWithColumnsAndComments } from "@/app/lib/postgres"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { cn } from "@/lib/utils"
+import { webSocketManager } from "@/lib/websocket"
+
+import { RetroCard } from "./RetroCard"
+import { RetroColumn, ColumnType } from "./RetroColumn"
 
 interface RetroBoardProps {
   boardId: string
@@ -29,6 +48,8 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const [sortMode, setSortMode] = useState<SortMode>("votes")
   const [manualOrder, setManualOrder] = useState<Record<string, string[]>>({})
   const [activeCard, setActiveCard] = useState<RetroCard | null>(null)
+  const [activeCardColumnType, setActiveCardColumnType] = useState<ColumnType | undefined>()
+  const [theme, setTheme] = useState<"light" | "dark">("light")
 
   const sensors = useSensors(
     useSensor(PointerSensor, {
@@ -49,6 +70,18 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     
     return rectIntersection(args)
   }
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light"
+    setTheme(newTheme)
+    document.documentElement.classList.toggle("dark", newTheme === "dark")
+  }
+
+  useEffect(() => {
+    if (document.documentElement.classList.contains("dark")) {
+      setTheme("dark")
+    }
+  }, [])
 
   // Convert database cards to RetroCard format
   const convertToRetroCard = (dbCard: any): RetroCard => ({
@@ -349,6 +382,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
       const card = column.comments.find(c => c.comment_id === cardId)
       if (card) {
         setActiveCard(convertToRetroCard(card))
+        setActiveCardColumnType(columnType)
       }
     }
   }
@@ -356,6 +390,7 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   const handleDragEnd = async (event: DragEndEvent) => {
     const { active, over } = event
     setActiveCard(null)
+    setActiveCardColumnType(undefined)
 
     if (!over || !active.data.current || !boardData) return
 
@@ -491,10 +526,11 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-primary"></div>
-          <p className="mt-4 text-muted-foreground">Loading board...</p>
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-100 px-6 dark:bg-slate-950">
+        <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-br from-emerald-200/50 via-white to-sky-100/50 dark:from-emerald-500/10 dark:via-slate-950 dark:to-sky-500/10" />
+        <div className="relative w-full max-w-md rounded-[28px] border border-white/70 bg-white/85 p-10 text-center shadow-[0_30px_80px_-50px_rgba(15,23,42,0.5)] backdrop-blur dark:border-white/10 dark:bg-slate-900/75">
+          <div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-slate-200 border-t-slate-900 dark:border-white/10 dark:border-t-white" />
+          <p className="mt-5 text-sm font-medium text-slate-600 dark:text-slate-300">Loading board...</p>
         </div>
       </div>
     )
@@ -502,12 +538,14 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
 
   if (error) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <p className="text-destructive text-lg">{error}</p>
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-100 px-6 dark:bg-slate-950">
+        <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-br from-rose-200/60 via-white to-amber-100/50 dark:from-rose-500/10 dark:via-slate-950 dark:to-amber-500/10" />
+        <div className="relative w-full max-w-md rounded-[28px] border border-white/70 bg-white/85 p-10 text-center shadow-[0_30px_80px_-50px_rgba(15,23,42,0.5)] backdrop-blur dark:border-white/10 dark:bg-slate-900/75">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-rose-600 dark:text-rose-300">Board unavailable</p>
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300">{error}</p>
           <Button
             onClick={fetchBoardData}
-            className="mt-4"
+            className="mt-6 rounded-full bg-slate-900 px-5 text-sm font-semibold text-white hover:bg-slate-700 dark:bg-white dark:text-slate-950 dark:hover:bg-slate-200"
           >
             Try Again
           </Button>
@@ -518,8 +556,12 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
 
   if (!boardData) {
     return (
-      <div className="flex items-center justify-center min-h-screen">
-        <p className="text-muted-foreground">Board not found</p>
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-slate-100 px-6 dark:bg-slate-950">
+        <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-br from-slate-200/60 via-white to-emerald-100/50 dark:from-slate-700/30 dark:via-slate-950 dark:to-emerald-500/10" />
+        <div className="relative w-full max-w-md rounded-[28px] border border-white/70 bg-white/85 p-10 text-center shadow-[0_30px_80px_-50px_rgba(15,23,42,0.5)] backdrop-blur dark:border-white/10 dark:bg-slate-900/75">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-500 dark:text-slate-400">Missing board</p>
+          <p className="mt-3 text-base text-slate-600 dark:text-slate-300">Board not found</p>
+        </div>
       </div>
     )
   }
@@ -527,7 +569,17 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
   // Prepare columns data
   const sortedColumns = [...boardData.columns].sort((a, b) => a.column_order - b.column_order)
   const columnTypes: ColumnType[] = ["went-well", "to-improve", "action-items"]
-  const accentColors = ["success", "destructive", "primary"] as const
+  const updatedAt = new Date(boardData.updated_at)
+  const updatedLabel = Number.isNaN(updatedAt.valueOf())
+    ? "Recently updated"
+    : `Updated ${new Intl.DateTimeFormat("en", { month: "short", day: "numeric" }).format(updatedAt)}`
+  const boardDescription = boardData.board_description?.trim()
+  const gridClassName =
+    sortedColumns.length === 1
+      ? "grid-cols-1"
+      : sortedColumns.length === 2
+        ? "grid-cols-1 lg:grid-cols-2"
+        : "grid-cols-1 lg:grid-cols-2 xl:grid-cols-3"
   
   // Map columns from database to renderable column data
   const columnsToRender = sortedColumns.map((column, index) => {
@@ -556,101 +608,140 @@ export function RetroBoard({ boardId }: RetroBoardProps) {
     
     return {
       title: column.column_name,
-      description: "", // Could add column descriptions to database schema in future
       columnType: columnTypes[index],
       cards: sortedCards,
-      accentColor: accentColors[index]
     }
   })
 
   return (
-    <div className="min-h-screen pt-20 px-6 pb-6 md:pt-24 md:px-8 md:pb-8 lg:pt-28 lg:px-12 lg:pb-12">
-      <div className="mx-auto max-w-7xl">
-        {/* Header */}
-        <header className="mb-8 md:mb-12">
-          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
-            <div>
-              <h1 className="text-balance text-4xl font-bold tracking-tight md:text-5xl">
-                {boardData.board_name || "Sprint Retrospective"}
-              </h1>
-              <p className="mt-2 text-pretty text-muted-foreground">
-                {boardData.board_description || "Reflect on what went well, what to improve, and plan action items for the next sprint."}
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <DropdownMenu>
-                <DropdownMenuTrigger asChild>
-                  <Button variant="outline" size="sm">
-                    <ArrowUpDown className="mr-2 h-4 w-4" />
-                    Sort: {sortMode === "votes" ? "By Votes" : "Manual"}
-                  </Button>
-                </DropdownMenuTrigger>
-                <DropdownMenuContent align="end">
-                  <DropdownMenuItem onClick={() => setSortMode("votes")}>
-                    <ThumbsUp className="mr-2 h-4 w-4" />
-                    Sort by Votes
-                  </DropdownMenuItem>
-                  <DropdownMenuItem onClick={() => {
-                    // Initialize manual order with current card positions when switching to manual mode
-                    if (sortMode === "votes" && boardData) {
-                      const newManualOrder: Record<string, string[]> = {}
-                      boardData.columns.forEach(column => {
-                        const cards = column.comments.map(convertToRetroCard)
-                        const sortedCards = [...cards].sort((a, b) => b.votes - a.votes)
-                        newManualOrder[column.column_id] = sortedCards.map(card => card.id)
-                      })
-                      setManualOrder(newManualOrder)
-                    }
-                    setSortMode("user")
-                  }}>
-                    <GripVertical className="mr-2 h-4 w-4" />
-                    Manual Sorting
-                  </DropdownMenuItem>
-                </DropdownMenuContent>
-              </DropdownMenu>
-              <Button variant="outline" size="sm">
-                <Share2 className="mr-2 h-4 w-4" />
-                Share
-              </Button>
-              <Button variant="outline" size="sm">
-                <Download className="mr-2 h-4 w-4" />
-                Export
-              </Button>
-            </div>
-          </div>
-        </header>
+    <div className="relative min-h-screen overflow-hidden bg-slate-100 text-slate-950 dark:bg-slate-950 dark:text-slate-50">
+      <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-white/90 via-slate-100/70 to-slate-100 dark:from-slate-950 dark:via-slate-950 dark:to-slate-950" />
+      <div className="pointer-events-none absolute inset-x-0 top-0 h-[420px] bg-gradient-to-br from-emerald-200/30 via-white/30 to-sky-100/30 dark:from-emerald-500/10 dark:via-slate-950 dark:to-sky-500/10" />
+      <div className="pointer-events-none absolute left-[-6%] top-20 h-72 w-72 rounded-full bg-emerald-300/20 blur-3xl dark:bg-emerald-500/10" />
+      <div className="pointer-events-none absolute right-[-4%] top-6 h-80 w-80 rounded-full bg-sky-300/20 blur-3xl dark:bg-sky-500/10" />
 
-        {/* Columns Grid */}
-        <DndContext 
-          sensors={sensors} 
-          collisionDetection={customCollisionDetection} 
-          onDragStart={handleDragStart}
-          onDragEnd={handleDragEnd}
-        >
-          <div className={`grid gap-6 ${sortedColumns.length === 2 ? 'md:grid-cols-2' : sortedColumns.length === 1 ? 'md:grid-cols-1' : 'md:grid-cols-3'}`}>
-            {columnsToRender.map((col) => (
-              <RetroColumn
-                key={col.columnType}
-                title={col.title}
-                description={col.description}
-                columnType={col.columnType}
-                cards={col.cards}
-                onAddCard={addCard}
-                onDeleteCard={deleteCard}
-                onVoteCard={voteCard}
-                accentColor={col.accentColor}
-                sortByVotes={sortMode === "votes"}
-              />
-            ))}
-          </div>
-          <DragOverlay dropAnimation={{ duration: 200, easing: 'ease' }}>
-            {activeCard ? (
-              <div className="shadow-2xl rotate-3 opacity-95">
-                <RetroCard card={activeCard} onDelete={() => {}} onVote={() => {}} />
+      <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-8 sm:px-6 lg:px-8">
+        <section className="overflow-hidden rounded-[32px] border border-white/70 bg-white/70 shadow-[0_30px_90px_-60px_rgba(15,23,42,0.45)] backdrop-blur-xl dark:border-white/10 dark:bg-slate-900/70">
+          <div className="border-b border-slate-200/70 px-5 py-5 dark:border-white/10 sm:px-6 sm:py-6">
+            <div className="flex flex-col gap-5 lg:flex-row lg:items-center lg:justify-between">
+              <div className="min-w-0">
+                <div className="flex flex-wrap items-center gap-3">
+                  <span className="inline-flex items-center gap-2 rounded-full border border-emerald-200/90 bg-emerald-50/80 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] text-emerald-700 dark:border-emerald-400/20 dark:bg-emerald-500/10 dark:text-emerald-200">
+                    <span className="h-2 w-2 rounded-full bg-emerald-500" />
+                    Live board
+                  </span>
+                  <span className="text-sm text-slate-500 dark:text-slate-400">{updatedLabel}</span>
+                </div>
+
+                <h1 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 dark:text-white sm:text-4xl">
+                  {boardData.board_name || "Team retrospective"}
+                </h1>
+
+                {boardDescription ? (
+                  <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-600 dark:text-slate-300 sm:text-base">
+                    {boardDescription}
+                  </p>
+                ) : null}
               </div>
-            ) : null}
-          </DragOverlay>
-        </DndContext>
+
+              <div className="flex flex-wrap items-center gap-3 lg:justify-end">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button
+                      type="button"
+                      className="inline-flex items-center gap-2 rounded-full border border-slate-200/80 bg-white/70 px-4 py-2.5 text-sm font-medium text-slate-700 transition hover:border-slate-300 hover:bg-white/90 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-white/20 dark:hover:bg-white/10"
+                    >
+                      <ArrowUpDown className="h-4 w-4" />
+                      <span>{sortMode === "votes" ? "Top voted" : "Manual order"}</span>
+                    </button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent
+                    align="end"
+                    className="rounded-2xl border border-slate-200 bg-white/95 p-2 shadow-xl dark:border-white/10 dark:bg-slate-900/95"
+                  >
+                    <DropdownMenuItem
+                      onClick={() => setSortMode("votes")}
+                      className="cursor-pointer rounded-xl px-3 py-2 text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-950 dark:text-slate-200 dark:focus:bg-white/10 dark:focus:text-white"
+                    >
+                      <ArrowUpDown className="mr-2 h-4 w-4" />
+                      Top voted
+                    </DropdownMenuItem>
+                    <DropdownMenuItem
+                      onClick={() => {
+                        if (sortMode === "votes" && boardData) {
+                          const newManualOrder: Record<string, string[]> = {}
+                          boardData.columns.forEach(column => {
+                            const cards = column.comments.map(convertToRetroCard)
+                            const sortedCards = [...cards].sort((a, b) => b.votes - a.votes)
+                            newManualOrder[column.column_id] = sortedCards.map(card => card.id)
+                          })
+                          setManualOrder(newManualOrder)
+                        }
+                        setSortMode("user")
+                      }}
+                      className="cursor-pointer rounded-xl px-3 py-2 text-sm font-medium text-slate-700 focus:bg-slate-100 focus:text-slate-950 dark:text-slate-200 dark:focus:bg-white/10 dark:focus:text-white"
+                    >
+                      <GripVertical className="mr-2 h-4 w-4" />
+                      Manual order
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+
+                <button
+                  type="button"
+                  onClick={toggleTheme}
+                  className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-slate-200/80 bg-white/70 text-slate-700 transition hover:border-slate-300 hover:bg-white/90 dark:border-white/10 dark:bg-white/5 dark:text-slate-200 dark:hover:border-white/20 dark:hover:bg-white/10"
+                  aria-label="Toggle theme"
+                >
+                  {theme === "light" ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <main className="p-2 sm:p-3">
+          <DndContext 
+            sensors={sensors} 
+            collisionDetection={customCollisionDetection} 
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
+          >
+            <div className={cn("grid gap-2 lg:gap-0", gridClassName)}>
+              {columnsToRender.map((col, index) => (
+                <div
+                  key={col.columnType}
+                  className={cn(
+                    "min-w-0",
+                    index > 0 && "border-t border-slate-200/70 dark:border-white/10 lg:border-l lg:border-t-0"
+                  )}
+                >
+                  <RetroColumn
+                    title={col.title}
+                    columnType={col.columnType}
+                    cards={col.cards}
+                    onAddCard={addCard}
+                    onDeleteCard={deleteCard}
+                    onVoteCard={voteCard}
+                    sortByVotes={sortMode === "votes"}
+                  />
+                </div>
+              ))}
+            </div>
+            <DragOverlay dropAnimation={{ duration: 200, easing: 'ease' }}>
+              {activeCard ? (
+                <div className="rotate-2 opacity-95">
+                  <RetroCard
+                    card={activeCard}
+                    onDelete={() => {}}
+                    onVote={() => {}}
+                    columnType={activeCardColumnType}
+                  />
+                </div>
+              ) : null}
+            </DragOverlay>
+          </DndContext>
+          </main>
+        </section>
       </div>
     </div>
   )

@@ -2,8 +2,6 @@
 
 import { use } from "react";
 import { RetroBoard } from "@/components/board/RetroBoard";
-import { Header } from "@/components/header";
-import NavBar from "@/app/navbar";
 
 export default function BoardPage({ 
   params 
@@ -13,9 +11,6 @@ export default function BoardPage({
   const { slug } = use(params);
   
   return (
-    <>
-      <Header />
-      <RetroBoard boardId={slug} />
-    </>
+    <RetroBoard boardId={slug} />
   );
 }

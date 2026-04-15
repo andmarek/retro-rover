@@ -6,6 +6,8 @@ import { Button } from "@/components/ui/button";
 
 export interface CardData {
   comment_id: string;
+  board_id: string;
+  column_id: number;
   comment_text: string;
   comment_likes: number;
   created_at: Date;

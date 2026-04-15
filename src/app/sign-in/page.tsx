@@ -2,16 +2,17 @@
 
 import React, { useState } from "react";
 import { signIn, signUp } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Page() {
-  const [isSignUp, setIsSignUp] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const isSignUp = searchParams.get("mode") === "signup";
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -19,7 +20,7 @@ export default function Page() {
     setError("");
 
     try {
-      console.log("Starting auth request...", isSignUp ? "signUp" : "signIn");
+      let result;
 
       if (isSignUp) {
         if (password !== confirmPassword) {
@@ -28,29 +29,26 @@ export default function Page() {
           return;
         }
 
-        console.log("Attempting sign up");
-
-        const result = await signUp.email({
+        result = await signUp.email({
           email,
           password,
           name: email, // Use email as name for now
         });
-
-        console.log("Sign up result:", result);
       } else {
-        console.log("Attempting sign in...");
-        const result = await signIn.email({
+        result = await signIn.email({
           email,
           password,
         });
-        console.log("Sign in result:", result);
       }
 
-      console.log("Auth successful, redirecting");
+      if (result.error) {
+        setError(result.error.message || "Authentication failed");
+        return;
+      }
 
+      router.refresh();
       router.push("/");
     } catch (err: any) {
-      console.error("Auth error:", err);
       setError(err.message || "Authentication failed");
     } finally {
       setIsLoading(false);
@@ -139,8 +137,8 @@ export default function Page() {
               type="button"
               className="text-indigo-600 hover:text-indigo-500"
               onClick={() => {
-                setIsSignUp(!isSignUp);
                 setError("");
+                router.replace(isSignUp ? "/sign-in" : "/sign-in?mode=signup");
               }}
             >
               {isSignUp

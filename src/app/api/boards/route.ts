@@ -1,13 +1,11 @@
 import { Pool } from "pg";
 import { NextResponse } from "next/server";
 import { auth } from "@/lib/auth";
+import { getPostgresPoolConfig } from "@/lib/postgres-config";
 import { headers } from "next/headers";
 import { v4 as uuidv4 } from "uuid";
 
-const pool = new Pool({
-  connectionString: process.env.POSTGRES_CONNECTION_STRING,
-  ssl: { rejectUnauthorized: false },
-});
+const pool = new Pool(getPostgresPoolConfig());
 
 export async function GET() {
   try {
