@@ -20,7 +20,9 @@ I originally built it after running bi-weekly retrospectives for my team and get
 
 ## Project Status
 
-This project is **not currently under active development**, but it was a meaningful project for me as a backend engineer looking to get deeper experience with frontend product development, UI design, and interactive application flows.
+> [!WARNING]
+> This project is **not currently under active development**.
+> It was a meaningful project for me as a backend engineer looking to get deeper experience with frontend product development, UI design, and interactive application flows.
 
 Most of the work was done in 2023 (pre-LLM assisted coding) as a hands-on side project focused on building the product myself end to end. It has since been revamped using agents.
 
